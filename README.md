@@ -1,6 +1,22 @@
 # fast-form
 project from UniHack hackathon, helps to extract data from forms
 
+## Installing dependencies
+
+first run 
+
+```
+pip install pip-tools
+pip-sync
+```
+
+adding dependencies:
+
+add line to requirements.in and then run
+```
+pip-compile
+```
+
 ## Example configuration JSON
 
 ```
