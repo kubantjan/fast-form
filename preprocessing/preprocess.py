@@ -70,7 +70,7 @@ def normalize(im):
     im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
     # Filter the grayscale image with a 3x3 kernel
-    blurred = cv2.GaussianBlur(im_gray, (3, 3), 0)
+    # blurred = cv2.GaussianBlur(im_gray, (3, 3), 0)
 
     # Applies a Gaussian adaptive thresholding. In practice, adaptive thresholding
     # seems to work better than appling a single, global threshold to the image.
@@ -81,8 +81,8 @@ def normalize(im):
     # as a science and domain-dependand.
     # In practice, you might want to try different  values for your specific answer
     # sheet.
-    return cv2.adaptiveThreshold(
-        blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 77, 10)
+    return cv2.threshold(
+        im_gray, 125, 255, type=0)[1]
 
 
 def get_approx_contour(contour, tol=.01):
@@ -177,7 +177,7 @@ def preprocess(source_file, config) -> np.ndarray:
 
     contours = get_contours(im)
 
-    corners = get_corners(contours)
+    corners = sorted(contours, key=lambda x: - cv2.contourArea(x))[1:5]
 
     outmost = sort_points_counter_clockwise(get_outmost_points(corners))
 
