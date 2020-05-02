@@ -1,13 +1,7 @@
 import cv2
 import numpy as np
 
-# When the four corners are identified, we will do a four-point
-# perspective transform such that the outmost points of each
-# corner map to a TRANSF_SIZE x TRANSF_SIZE square image.
-TRANSF_SIZE = 512
-
-ANSWER_SHEET_WIDTH = 740
-ANSWER_SHEET_HEIGHT = 1049
+from configuration.const import CORNER_IMG_PATH
 
 
 def calculate_contour_features(contour):
@@ -30,7 +24,7 @@ def calculate_contour_features(contour):
     return cv2.HuMoments(moments)
 
 
-def calculate_corner_features():
+def calculate_corner_features(corner_path='images/corners/corner.png'):
     """Calculates the array of features for the corner contour.
     In practice, this can be pre-calculated, as the corners are constant
     and independent from the inputs.
@@ -39,7 +33,7 @@ def calculate_corner_features():
     can reliably extract its features. We will use these features to look for
     contours in our input image that look like a corner.
     """
-    corner_img = cv2.imread('images/corners/corner.png')
+    corner_img = cv2.imread(corner_path)
     corner_img_gray = cv2.cvtColor(corner_img, cv2.COLOR_BGR2GRAY)
     contours, hierarchy = cv2.findContours(
         corner_img_gray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -48,7 +42,7 @@ def calculate_corner_features():
     # - The "outer" contour, which wraps the whole image, at hierarchy level 0
     # - The corner contour, which we are looking for, at hierarchy level 1
     # If in trouble, one way to check what's happening is to draw the found contours
-    # with cv2.drawContours(corner_img, contours, -1, (255, 0, 0)) and try and find
+    # with cv2.drawContours(CORNER_IMG_PATH, contours, -1, (255, 0, 0)) and try and find
     # the correct corner contour by drawing one contour at a time. Ideally, this
     # would not be done at runtime.
     if len(contours) != 2:
@@ -58,7 +52,7 @@ def calculate_corner_features():
     # Following our assumptions as stated above, we take the contour that has a parent
     # contour (that is, it is _not_ the outer contour) to be the corner contour.
     # If in trouble, verify that this contour is the corner contour with
-    # cv2.drawContours(corner_img, [corner_contour], -1, (255, 0, 0))
+    # cv2.drawContours(CORNER_IMG_PATH, [corner_contour], -1, (255, 0, 0))
     corner_contour = next(ct
                           for i, ct in enumerate(contours)
                           if hierarchy[0][i][3] != -1)
@@ -112,7 +106,7 @@ def get_corners(contours):
     This is essentially a classification problem. A good approach would be
     to train a statistical classifier model and apply it here. In our little
     exercise, we assume the corners are necessarily there."""
-    corner_features = calculate_corner_features()
+    corner_features = calculate_corner_features(corner_path=CORNER_IMG_PATH)
     return sorted(
         contours,
         key=lambda c: features_distance(
@@ -157,33 +151,16 @@ def get_outmost_points(contours):
     return get_bounding_rect(all_points)
 
 
-def perspective_transform(img, points):
-    """Applies a 4-point perspective transformation in `img` so that `points`
-    are the new corners."""
-    source = np.array(
-        points,
-        dtype="float32")
+def crop_to_corners(im, outmost):
+    x_max = max([x[0] for x in outmost])
+    x_min = min([x[0] for x in outmost])
+    y_max = max([x[1] for x in outmost])
+    y_min = min([x[1] for x in outmost])
 
-    dest = np.array([
-        [TRANSF_SIZE, TRANSF_SIZE],
-        [0, TRANSF_SIZE],
-        [0, 0],
-        [TRANSF_SIZE, 0]],
-        dtype="float32")
-
-    transf = cv2.getPerspectiveTransform(source, dest)
-    warped = cv2.warpPerspective(img, transf, (TRANSF_SIZE, TRANSF_SIZE))
-    return warped
+    return im[y_min:y_max, x_min:x_max]
 
 
-def sheet_coord_to_transf_coord(x, y):
-    return list(map(lambda n: int(np.round(n)), (
-        TRANSF_SIZE * x / ANSWER_SHEET_WIDTH,
-        TRANSF_SIZE * y / ANSWER_SHEET_HEIGHT
-    )))
-
-
-def preprocess(source_file) -> np.ndarray:
+def preprocess(source_file, config) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
@@ -194,18 +171,18 @@ def preprocess(source_file) -> np.ndarray:
     - Applies perpsective transform to get a bird's eye view
     - Scans each line for the marked alternative
     """
-    im_orig = cv2.imread(source_file)
+    im = cv2.imread(source_file)
 
-    im_normalized = normalize(im_orig)
+    im = normalize(im)
 
-    contours = get_contours(im_normalized)
+    contours = get_contours(im)
 
     corners = get_corners(contours)
 
-    cv2.drawContours(im_orig, corners, -1, (0, 255, 0), 3)
-
     outmost = sort_points_counter_clockwise(get_outmost_points(corners))
 
-    normalized_transf = perspective_transform(im_normalized, outmost)
+    im = crop_to_corners(im, outmost)
 
-    return normalized_transf
+    im = cv2.resize(im, (config["width"], config["height"]))
+
+    return im
