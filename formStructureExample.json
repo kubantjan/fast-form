@@ -1,14 +1,8 @@
-# fast-form
-project from UniHack hackathon, helps to extract data from forms
-
-## Example configuration JSON
-
-```
 {
   "fields": [
     {
       "name": "Example",
-      "type": "string",//possible types: string, numbers, boxes 
+      "type": "string",
       "topLeft": {
         "x": 10,
         "y": 20
@@ -20,4 +14,3 @@ project from UniHack hackathon, helps to extract data from forms
     }
   ]
 }
-```
