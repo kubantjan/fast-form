@@ -19,12 +19,12 @@ pip-compile
 
 ## Example configuration JSON
 
-```
+``` json
 {
   "fields": [
     {
       "name": "Example",
-      "type": "string",//possible types: string, numbers, boxes 
+      "type": "string",
       "topLeft": {
         "x": 10,
         "y": 20
@@ -32,8 +32,27 @@ pip-compile
       "numberOfBoxes": 10,
       "boxWidth": 3,
       "boxHeight": 2,
-      "spaceBetweenBoxes": 1
+      "spaceBetweenBoxes": 1,
+      "orientation": "horizontal"
+    },
+    {
+      "name": "Example2",
+      "type": "boxes",
+      "topLeft": {
+        "x": 10,
+        "y": 60
+      },
+      "numberOfBoxes": 10,
+      "boxWidth": 3,
+      "boxHeight": 2,
+      "spaceBetweenBoxes": 1,
+      "orientation": "vertical"
     }
-  ]
+  ],
+  "size": {
+    "width": 740,
+    "height": 1049
+  }
 }
+
 ```
