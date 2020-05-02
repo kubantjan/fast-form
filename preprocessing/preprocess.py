@@ -1,4 +1,3 @@
-import argparse
 import cv2
 import numpy as np
 
@@ -7,23 +6,8 @@ import numpy as np
 # corner map to a TRANSF_SIZE x TRANSF_SIZE square image.
 TRANSF_SIZE = 512
 
-#
-# Answer sheet properties.
-#
-N_QUESTIONS = 10
-
 ANSWER_SHEET_WIDTH = 740
 ANSWER_SHEET_HEIGHT = 1049
-
-ANSWER_PATCH_HEIGHT = 50
-ANSWER_PATCH_HEIGHT_WITH_MARGIN = 80
-ANSWER_PATCH_LEFT_MARGIN = 200
-ANSWER_PATCH_RIGHT_MARGIN = 90
-FIRST_ANSWER_PATCH_TOP_Y = 200
-
-ALTERNATIVE_HEIGHT = 50
-ALTERNATIVE_WIDTH = 50
-ALTERNATIVE_WIDTH_WITH_MARGIN = 100
 
 
 def calculate_contour_features(contour):
@@ -55,7 +39,7 @@ def calculate_corner_features():
     can reliably extract its features. We will use these features to look for
     contours in our input image that look like a corner.
     """
-    corner_img = cv2.imread('img/corner.png')
+    corner_img = cv2.imread('images/corners/corner.png')
     corner_img_gray = cv2.cvtColor(corner_img, cv2.COLOR_BGR2GRAY)
     contours, hierarchy = cv2.findContours(
         corner_img_gray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -199,69 +183,7 @@ def sheet_coord_to_transf_coord(x, y):
     )))
 
 
-def get_question_patch(transf, question_index):
-    """Exracts a region of interest (ROI) of a single question."""
-    # Top left of question patch q_number
-    tl = sheet_coord_to_transf_coord(
-        ANSWER_PATCH_LEFT_MARGIN,
-        FIRST_ANSWER_PATCH_TOP_Y + ANSWER_PATCH_HEIGHT_WITH_MARGIN * question_index
-    )
-
-    # Bottom right of question patch q_number
-    br = sheet_coord_to_transf_coord(
-        ANSWER_SHEET_WIDTH - ANSWER_PATCH_RIGHT_MARGIN,
-        FIRST_ANSWER_PATCH_TOP_Y +
-        ANSWER_PATCH_HEIGHT +
-        ANSWER_PATCH_HEIGHT_WITH_MARGIN * question_index
-    )
-    return transf[tl[1]:br[1], tl[0]:br[0]]
-
-
-def get_question_patches(transf):
-    for i in range(N_QUESTIONS):
-        yield get_question_patch(transf, i)
-
-
-def get_alternative_patches(question_patch):
-    for i in range(5):
-        x0, _ = sheet_coord_to_transf_coord(ALTERNATIVE_WIDTH_WITH_MARGIN * i, 0)
-        x1, _ = sheet_coord_to_transf_coord(ALTERNATIVE_WIDTH +
-                                            ALTERNATIVE_WIDTH_WITH_MARGIN * i, 0)
-        yield question_patch[:, x0:x1]
-
-
-def draw_marked_alternative(question_patch, index):
-    cx, cy = sheet_coord_to_transf_coord(
-        ALTERNATIVE_WIDTH * (2 * index + .5),
-        ALTERNATIVE_HEIGHT / 2)
-    draw_point((cx, cy), question_patch, radius=5, color=(255, 0, 0))
-
-
-def get_marked_alternative(alternative_patches):
-    """Decides which alternative is marked, if any.
-
-    Given a list of alternative patches, we need to decide which one,
-    if any, is marked. Here, we do a simple, hacky heuristic: the
-    alternative patch with lowest brightness (darker), is marked if
-    it is sufficiently darker than the _second_ darker alternative
-    patch.
-
-    In practice, a more robust, data-driven model is necessary."""
-    means = list(map(np.mean, alternative_patches))
-    sorted_means = sorted(means)
-
-    # Simple heuristic
-    if sorted_means[0]/sorted_means[1] > .7:
-        return None
-
-    return np.argmin(means)
-
-
-def get_letter(alt_index):
-    return ["A", "B", "C", "D", "E"][alt_index] if alt_index is not None else "N/A"
-
-
-def get_answers(source_file):
+def preprocess(source_file) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
@@ -284,56 +206,6 @@ def get_answers(source_file):
 
     outmost = sort_points_counter_clockwise(get_outmost_points(corners))
 
-    color_transf = perspective_transform(im_orig, outmost)
     normalized_transf = perspective_transform(im_normalized, outmost)
 
-    answers = []
-    for i, q_patch in enumerate(get_question_patches(normalized_transf)):
-        alt_index = get_marked_alternative(get_alternative_patches(q_patch))
-
-        if alt_index is not None:
-            color_q_patch = get_question_patch(color_transf, i)
-            draw_marked_alternative(color_q_patch, alt_index)
-
-        answers.append(get_letter(alt_index))
-
-    return answers, color_transf
-
-
-def main():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "--input",
-        help="Input image filename",
-        required=True,
-        type=str)
-
-    parser.add_argument(
-        "--output",
-        help="Output image filename",
-        type=str)
-
-    parser.add_argument(
-        "--show",
-        action="store_true",
-        help="Displays annotated image")
-
-    args = parser.parse_args()
-
-    answers, im = get_answers(args.input)
-
-    for i, answer in enumerate(answers):
-        print("Q{}: {}".format(i + 1, answer))
-
-    if args.output:
-        cv2.imwrite(args.output, im)
-        print('Wrote image to {}.'.format(args.output))
-
-    if args.show:
-        cv2.imshow('Annotated image', im)
-        cv2.waitKey(0)
-
-
-if __name__ == '__main__':
-    main()
+    return normalized_transf
