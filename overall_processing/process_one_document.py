@@ -47,7 +47,7 @@ if __name__ == '__main__':
     image_path = "test/example_forms/julinka_dotaznik/front_page.jpg"
     model_structure_path = "model_data/model.json"
     model_weights_path = "model_data/model.h5"
-    result_mapper_path = "training_data/emnist-balanced-mapping.txt"
+    result_mapper_path = "model_data/emnist-balanced-mapping.txt"
 
     # load model
     model = load_model(model_structure_path, model_weights_path)
