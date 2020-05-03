@@ -17,11 +17,28 @@ add line to requirements.in and then run
 pip-compile
 ```
 
+## Run
+```bash
+python3 main.py -c config/config.json
+``` 
+
 ## Retrain model
-We are using preparsed emnist
+We are using preparsed emnist dataset.
 https://www.kaggle.com/crawford/emnist
 
-### Example form configuration - JSON
+To retrain the model, you need to download it to training_data folder 
+```text
+fast-form
+ - training_data
+    - emnist-balanced-mapping.txt
+    - emnist-balanced-train.csv
+    - emnist-balanced-test.csv
+    ...
+ ...
+```
+and then run `emnist-neural-network.ipynb` in jupyter notebook.
+
+## Example form configuration - JSON
 
 ``` json
 {
