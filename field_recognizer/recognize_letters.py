@@ -39,8 +39,8 @@ def recognize_letter(img, model, result_mapper):
     # print(img)
     img_p = img.copy()
     img_p = process_img(img_p)
-    print(img_p)
-    print("type",type(img_p))
+    # print(img_p)
+    # print("type",type(img_p))
     prediction = predict(img_p, model, result_mapper)
     return prediction, 0.5, img
 
