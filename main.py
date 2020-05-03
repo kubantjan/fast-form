@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 
 import cv2
 import numpy as np
@@ -41,13 +42,23 @@ def output_data(form_data, name):
     df.to_excel(filename, index=False)
     return filename
 
+def load_config(config_path):
+    with open(config_path,"rb") as f:
+        return json.loads(f.read())
 
 if __name__ == '__main__':
+    # parse CLI args
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", '-c', help="Pass config file.")
+    args = parser.parse_args()
+
     # define paths
-    image_path = "test/example_forms/julinka_dotaznik/front_page.jpg"
-    model_structure_path = "model_data/model.json"
-    model_weights_path = "model_data/model.h5"
-    result_mapper_path = "model_data/emnist-balanced-mapping.txt"
+    config = load_config(args.config)
+
+    image_path = config["image_path"]
+    model_structure_path = config["model_structure_path"]
+    model_weights_path = config["model_weights_path"]
+    result_mapper_path = config["result_mapper_path"]
 
     # load model
     model = load_model(model_structure_path, model_weights_path)
