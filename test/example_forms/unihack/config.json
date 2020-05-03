@@ -1,0 +1,69 @@
+{
+  "width": 1885,
+  "height": 2609,
+  "fields": [
+    {
+      "name": "Spali jste během Unihacku?",
+      "type": "boxes",
+      "topLeft": {
+        "x": 306,
+        "y": 1720
+      },
+      "numberOfBoxes": 5,
+      "boxWidth": 78,
+      "boxHeight": 60,
+      "spaceBetweenBoxes": 1,
+      "orientation": "vertical",
+      "answers": [
+        "Pořád!",
+        "V noci 10 hodin a po obědě šlofíček.",
+        "Každou noc 8 hodin.",
+        "Výjimečně.",
+        "Vůbec!"
+      ]
+    },
+    {
+      "name": "Datum vyplnění",
+      "type": "letters",
+      "topLeft": {
+        "x": 197,
+        "y": 1378
+      },
+      "numberOfBoxes": 10,
+      "boxWidth": 70,
+      "boxHeight": 100,
+      "spaceBetweenBoxes": 0,
+      "orientation": "horizontal"
+    },
+    {
+      "name": "Jméno týmu",
+      "type": "letters",
+      "topLeft": {
+        "x": 197,
+        "y": 1111
+      },
+      "numberOfBoxes": 13,
+      "boxWidth": 65,
+      "boxHeight": 100,
+      "spaceBetweenBoxes": 0,
+      "orientation": "horizontal"
+    },
+    {
+      "name": "Chcete přepis, nebo zmrzlinu?",
+      "type": "boxes",
+      "topLeft": {
+        "x": 306,
+        "y": 2285
+      },
+      "numberOfBoxes": 2,
+      "boxWidth": 78,
+      "boxHeight": 60,
+      "spaceBetweenBoxes": 1,
+      "orientation": "vertical",
+      "answers": [
+        "Dotazníky a přepisování",
+        "Procházka a zmrzlina!"
+      ]
+    }
+  ]
+}
