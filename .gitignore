@@ -131,3 +131,6 @@ dmypy.json
 .idea
 
 training_data
+
+**.xlsx
+**.xlsx#
