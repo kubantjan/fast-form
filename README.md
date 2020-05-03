@@ -36,7 +36,7 @@ fast-form
     ...
  ...
 ```
-and then run `emnist-neural-network.ipynb` in jupyter notebook.
+and then run `field_recognizer/emnist-neural-network.ipynb` in jupyter notebook.
 
 ## Example form configuration - JSON
 
