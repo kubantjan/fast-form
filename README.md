@@ -17,7 +17,11 @@ add line to requirements.in and then run
 pip-compile
 ```
 
-## Example configuration JSON
+## Retrain model
+We are using preparsed emnist
+https://www.kaggle.com/crawford/emnist
+
+## Example form configuration - JSON
 
 ``` json
 {
@@ -56,3 +60,5 @@ pip-compile
 }
 ```
 there are 3 possible types "letter", "numbers", "boxes"
+
+
