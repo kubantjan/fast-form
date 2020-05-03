@@ -16,7 +16,7 @@
         },
         {
             "name": "1",
-            "type": "string",
+            "type": "letters",
             "topLeft": {
                 "x": 197,
                 "y": 1378

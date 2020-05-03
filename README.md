@@ -24,7 +24,7 @@ pip-compile
   "fields": [
     {
       "name": "Example",
-      "type": "string",
+      "type": "letters",
       "topLeft": {
         "x": 10,
         "y": 20
@@ -54,5 +54,5 @@ pip-compile
     "height": 1049
   }
 }
-
 ```
+there are 3 possible types "letter", "numbers", "boxes"
