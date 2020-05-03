@@ -23,14 +23,14 @@ def calculate_black_ratio(fields):
     return sum(boxes) / len(boxes)
 
 
-def recognize(form_data: dict):
+def recognize(form_data: dict, model, result_mapper):
     avg_box_black_ratio = calculate_black_ratio(form_data["fields"])
     fields = []
     for field in form_data["fields"]:
         if field["type"] == "letters":
-            recognized, accuracy, img_transf = recognize_letters(field["box_data"])
+            recognized, accuracy, img_transf = recognize_letters(field["box_data"], model, result_mapper)
         elif field["type"] == "numbers":
-            recognized, accuracy, img_transf = recognize_numbers(field["box_data"])
+            recognized, accuracy, img_transf = recognize_numbers(field["box_data"], model, result_mapper)
         elif field["type"] == "boxes":
             recognized, accuracy, img_transf = recognize_boxes(field["box_data"], avg_box_black_ratio)
         else:
