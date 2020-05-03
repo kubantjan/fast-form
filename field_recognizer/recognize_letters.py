@@ -7,6 +7,8 @@ EMNIST_SIZE = 28
 
 
 def is_not_space(img):
+    if len(img) == 0:
+        return False
     return sum(sum(img == 0)) > 30
 
 
@@ -29,7 +31,8 @@ def preprocess_img(img):
 
 
 def recognize_letters(imgs, model, result_mapper):
-    res = [recognize_letter(preprocess_img(img), model, result_mapper) if is_not_space(img) else (" ", 1.0, img) for img in imgs]
+    res = [recognize_letter(preprocess_img(img), model, result_mapper) if is_not_space(img) else (" ", 1.0, img) for img
+           in imgs]
 
     return zip(*res)
 
@@ -44,12 +47,14 @@ def recognize_letter(img, model, result_mapper):
     prediction = predict(img_p, model, result_mapper)
     return prediction, 0.5, img
 
-def predict (img, model, result_mapper):
+
+def predict(img, model, result_mapper):
     pred = model.predict(np.array([img]))
     # print(pred)
     pred_val = result_mapper.get(pred[0].argmax())
     # print(f"Prediction: {pred_val}")
     return pred_val
+
 
 def process_img(img):
     img = cv2.bitwise_not(img)

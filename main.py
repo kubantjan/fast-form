@@ -1,6 +1,5 @@
 import json
 import os
-import argparse
 
 import cv2
 import numpy as np
@@ -27,11 +26,11 @@ def output_data(form_data, name):
     fil = form_data["fields"]
     for field in fil:
         if field["type"] == "boxes":
-            data = np.argmax(field["recognized"]) + 1
+            data = field["answers"][np.argmax(field["recognized"])]
         elif field["type"] == "letters":
             data = "".join(field["recognized"])
 
-        field_name = field["name"] + field["type"]
+        field_name = field["name"]
         d[f'{field_name}_data'] = data,
         d[f'{field_name}_acc'] = min(field["accuracy"])
         d[f'{field_name}_img'] = f"{field_name}_img.png"
