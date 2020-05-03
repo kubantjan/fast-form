@@ -1,5 +1,4 @@
-def recognize_letters(imgs):
-    return ["a"] * len(imgs), [0.5] * len(imgs)
+from field_recognizer.recognize_letters import recognize_letters
 
 
 def recognize_numbers(imgs):
