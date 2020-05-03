@@ -21,7 +21,7 @@ pip-compile
 We are using preparsed emnist
 https://www.kaggle.com/crawford/emnist
 
-## Example form configuration - JSON
+### Example form configuration - JSON
 
 ``` json
 {
