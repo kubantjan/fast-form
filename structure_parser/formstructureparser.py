@@ -8,14 +8,10 @@ class FormStructureParser:
 	Gets imdata in cv2 image
 	"""
 
-	def __init__(self, form_structure_json):
-		self.FormStructure = self.load_form_structure(form_structure_json)
-
-	def load_form_structure(self, form_structure_json):
-		return json.loads(form_structure_json)
+	def __init__(self, config):
+		self.FormStructure = config
 
 	def process_form(self, form_img):
-		form_data = self.FormStructure.copy()
 		fields = []
 
 		for field in self.FormStructure["fields"]:
@@ -83,6 +79,8 @@ class FormStructureParser:
 		return box_data
 
 	def trim_whitespace(self, img):
+
+		return img
 
 		gray = 255 * (img < 128).astype(np.uint8)
 		coords = cv2.findNonZero(gray)  # Find all non-zero points (text)

@@ -6,12 +6,12 @@
             "type": "boxes",
             "topLeft": {
                 "x": 300,
-                "y": 2222
+                "y": 2226
             },
             "numberOfBoxes": 4,
             "boxWidth": 78,
-            "boxHeight": 65,
-            "spaceBetweenBoxes": 0,
+            "boxHeight": 60,
+            "spaceBetweenBoxes": 1,
             "orientation": "vertical"
         },
         {
@@ -21,8 +21,8 @@
                 "x": 197,
                 "y": 1378
             },
-            "numberOfBoxes": 15,
-            "boxWidth": 50,
+            "numberOfBoxes": 25,
+            "boxWidth": 66,
             "boxHeight": 100,
             "spaceBetweenBoxes": 0,
             "orientation": "horizontal"

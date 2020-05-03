@@ -81,6 +81,8 @@ def normalize(im):
     # as a science and domain-dependand.
     # In practice, you might want to try different  values for your specific answer
     # sheet.
+
+    # HERE ONE CAN SET thresh to 200 to see boxes when debugging
     return cv2.threshold(
         im_gray, 125, 255, type=0)[1]
 
