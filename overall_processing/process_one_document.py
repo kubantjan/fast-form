@@ -1,14 +1,14 @@
 import json
+import os
 
 import cv2
 import numpy as np
 import pandas as pd
-import os
 
+from field_recognizer.model import load_model, load_result_mapper
 from field_recognizer.recognize_all import recognize
 from preprocessing.preprocess import preprocess
 from structure_parser.formstructureparser import FormStructureParser
-from field_recognizer.model import load_model, load_result_mapper
 
 
 def process_document(im, config, model, result_mapper):
@@ -26,7 +26,7 @@ def output_data(form_data, name):
     fil = form_data["fields"]
     for field in fil:
         if field["type"] == "boxes":
-            data = np.argmax(field["recognized"])
+            data = np.argmax(field["recognized"]) + 1
         elif field["type"] == "letters":
             data = "".join(field["recognized"])
 
