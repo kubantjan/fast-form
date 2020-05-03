@@ -1,5 +1,5 @@
 import cv2
-import array as np
+import numpy as np
 
 from field_recognizer.resizing_for_recognizers import resize
 
@@ -36,10 +36,13 @@ def recognize_letters(imgs, model, result_mapper):
 
 def recognize_letter(img, model, result_mapper):
     # TODO ADAM
+    # print(img)
     img_p = img.copy()
     img_p = process_img(img_p)
+    print(img_p)
+    print("type",type(img_p))
     prediction = predict(img_p, model, result_mapper)
-    return "c", 0.5, img
+    return prediction, 0.5, img
 
 def predict (img, model, result_mapper):
     pred = model.predict(np.array([img]))
