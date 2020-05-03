@@ -4,5 +4,14 @@
 #
 #    pip-compile
 #
-numpy==1.18.3             # via -r requirements.in, opencv-python
+asgiref==3.2.7            # via django
+django==3.0.5             # via image
+image==1.5.31             # via -r requirements.in
+numpy==1.18.3             # via -r requirements.in, opencv-python, pandas
 opencv-python==4.2.0.34   # via -r requirements.in
+pandas==1.0.3             # via -r requirements.in
+pillow==7.1.2             # via image
+python-dateutil==2.8.1    # via pandas
+pytz==2020.1              # via django, pandas
+six==1.14.0               # via image, python-dateutil
+sqlparse==0.3.1           # via django

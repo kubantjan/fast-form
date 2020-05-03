@@ -61,7 +61,7 @@ def crop_to_corners(im, outmost):
     return im[y_min:y_max, x_min:x_max]
 
 
-def preprocess(source_file, config) -> np.ndarray:
+def preprocess(im, config) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
@@ -72,7 +72,6 @@ def preprocess(source_file, config) -> np.ndarray:
     - Applies perpsective transform to get a bird's eye view
     - Scans each line for the marked alternative
     """
-    im = cv2.imread(source_file)
 
     im = normalize(im)
 
