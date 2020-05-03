@@ -6,8 +6,7 @@ EMNIST_SIZE = 28
 
 
 def is_not_space(img):
-
-    return min(img.shape) > 2
+    return sum(sum(img == 0)) > 30
 
 
 def thicken(img):
@@ -29,7 +28,7 @@ def preprocess_img(img):
 
 
 def recognize_letters(imgs):
-    res = [recognize_letter(preprocess_img(img)) if is_not_space(img) else ("", 1.0, img) for img in imgs]
+    res = [recognize_letter(preprocess_img(img)) if is_not_space(img) else (" ", 1.0, img) for img in imgs]
 
     return zip(*res)
 
