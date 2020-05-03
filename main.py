@@ -1,6 +1,7 @@
 import json
 import os
 
+import argparse
 import cv2
 import numpy as np
 import pandas as pd
@@ -41,9 +42,11 @@ def output_data(form_data, name):
     df.to_excel(filename, index=False)
     return filename
 
+
 def load_config(config_path):
-    with open(config_path,"rb") as f:
+    with open(config_path, "rb") as f:
         return json.loads(f.read())
+
 
 if __name__ == '__main__':
     # parse CLI args
@@ -58,6 +61,7 @@ if __name__ == '__main__':
     model_structure_path = config["model_structure_path"]
     model_weights_path = config["model_weights_path"]
     result_mapper_path = config["result_mapper_path"]
+    image_config_path = config["image_config_path"]
 
     # load model
     model = load_model(model_structure_path, model_weights_path)
@@ -66,7 +70,7 @@ if __name__ == '__main__':
     result_mapper = load_result_mapper(result_mapper_path)
 
     # open config
-    with open("test/example_forms/julinka_dotaznik/front_page_config.json", 'r') as f:
+    with open(image_config_path, 'r') as f:
         config = json.load(f)
     im = cv2.imread(image_path)
 
