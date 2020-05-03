@@ -1,42 +1,94 @@
 import json
+import numpy as np
+import cv2
+
 
 class FormStructureParser:
 	"""
-	Gets img data in ndarray format returns dict with parsed ROIs
+	Gets imdata in cv2 image
 	"""
+
 	def __init__(self, form_structure_json):
 		self.FormStructure = self.load_form_structure(form_structure_json)
 
 	def load_form_structure(self, form_structure_json):
 		return json.loads(form_structure_json)
 
-	def process_form (self, form):
+	def process_form(self, form_img):
+		form_data = self.FormStructure.copy()
+		fields = []
+
 		for field in self.FormStructure["fields"]:
-			self.process_field(field, form)
+			field_crops = self.process_field(field, form_img)
+			fields.append(field_crops)
 
-	def process_field(self, field, form):
-		x = field["topLeft"]["x"]
-		width = field["boxWidth"]
-		y = field["topLeft"]["y"]
-		height = field["boxHeight"]
-		return form[x:x+width,y:y+height]
+		form_data = self.FormStructure.copy()
+		form_data["fields"] = fields
+		return form_data
+
+	def process_field(self, field_def, form):
+		print(field_def["name"])
+		boxCount = field_def["numberOfBoxes"]
+		if field_def["orientation"] == "horizontal":
+			x = field_def["topLeft"]["x"]
+			width = field_def["boxWidth"] * boxCount + field_def['spaceBetweenBoxes'] * (boxCount - 1)
+			y = field_def["topLeft"]["y"]
+			height = field_def["boxHeight"]
+			field_def["img"] = form[y:y + height, x:x + width]
+
+			box_data = self.processHorizontalBoxes(field_def)
+
+		elif field_def["orientation"] == "vertical":
+			x = field_def["topLeft"]["x"]
+			width = field_def["boxWidth"]
+			y = field_def["topLeft"]["y"]
+			height = field_def["boxHeight"] * boxCount + field_def['spaceBetweenBoxes'] * (boxCount - 1)
+			field_def["img"] = form[y:y + height, x:x + width]
+			box_data = self.processVerticalBoxes(field_def)
+		else:
+			m = "Attribute 'orientation' in form structure format have to be 'vertical' or 'horizontal'"
+			raise ValueError(m)
+
+		field_def["box_data"] = box_data
+		return field_def
+
+	def processHorizontalBoxes(self, field_def):
+		x = 0
+		box_data = []
+		field_img = field_def["img"]
+
+		for i in range(field_def["numberOfBoxes"]):
+			w = field_def["boxWidth"]
+			step = w + field_def["spaceBetweenBoxes"]
+			box_img = field_img[:, x:x + w]
+			trimmed_box = self.trim_whitespace(box_img)
+			box_data.append(trimmed_box)
+			x = x + step
+
+		return box_data
+
+	def processVerticalBoxes(self, field_def):
+		y = 0
+		box_data = []
+		field_img = field_def["img"]
+
+		for i in range(field_def["numberOfBoxes"]):
+			h = field_def["boxHeight"]
+			step = h + field_def["spaceBetweenBoxes"]
+			box_img = field_img[y:y + h, :]
+			trimmed_box = self.trim_whitespace(box_img)
+			box_data.append(trimmed_box)
+			y = y + step
+
+		return box_data
+
+	def trim_whitespace(self, img):
+
+		gray = 255 * (img < 128).astype(np.uint8)
+		coords = cv2.findNonZero(gray)  # Find all non-zero points (text)
+
+		x, y, w, h = cv2.boundingRect(coords)  # Find minimum spanning bounding box
+		rect = img[y:y + h, x:x + w]  # Crop the image - note we do this on the original image
+		return rect
 
 
-	# def get_question_patch(self, transf, question_index):
-	# 	"""Exracts a region of interest (ROI) of a single question."""
-	# 	# Top left of question patch q_number
-	# 	tl = sheet_coord_to_transf_coord(
-	# 		ANSWER_PATCH_LEFT_MARGIN,
-	# 		FIRST_ANSWER_PATCH_TOP_Y + ANSWER_PATCH_HEIGHT_WITH_MARGIN * question_index
-	# 	)
-	# 	# Bottom right of question patch q_number
-	# 	br = sheet_coord_to_transf_coord(
-	# 		ANSWER_SHEET_WIDTH - ANSWER_PATCH_RIGHT_MARGIN,
-	# 		FIRST_ANSWER_PATCH_TOP_Y +
-	# 		ANSWER_PATCH_HEIGHT +
-	# 		ANSWER_PATCH_HEIGHT_WITH_MARGIN * question_index
-	# 	)
-	# 	return transf[tl[1]:br[1], tl[0]:br[0]]
-
-if __name__ == "__main__":
-	pass
