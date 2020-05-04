@@ -78,4 +78,16 @@ and then run `field_recognizer/emnist-neural-network.ipynb` in jupyter notebook.
 ```
 there are 3 possible types "letter", "numbers", "boxes"
 
+## Road map
+
+#### Character Recognition
+ * /DONE/ enrich emnist dataset by different letter positioning
+ * enrich dataset emnist by different letter thickness
+ * Add model for numbers
+ * Solve czech characters, either
+   * find different dataset with czech diacritics
+   * enrich emnist dataset by letters with diacritics 
+   * Add second clasifier, that would recognize diacritics  / accute(') / carron(ˇ) / none  / 
+ 
+
 
