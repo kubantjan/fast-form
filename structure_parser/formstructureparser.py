@@ -82,5 +82,5 @@ class FormStructureParser:
         coords = cv2.findNonZero(gray)  # Find all non-zero points (text)
 
         x, y, w, h = cv2.boundingRect(coords)  # Find minimum spanning bounding box
-        rect = img[y:y + h, x:x + w]  # Crop the image - note we do this on the original image
+        rect = img[y:y + h, x:x + w]  # Crop the image
         return rect

@@ -2,14 +2,18 @@ import cv2
 import numpy as np
 
 
-def normalize(im):
+def normalize(img):
     """Converts `im` to black and white.
 
     Applying a threshold to a grayscale image will make every pixel either
     fully black or fully white."""
-    im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
-    thresh = 125  # use 200 when you want to see boxes around letters for debugging
+    im_blur = cv2.GaussianBlur(img,(5,5),0)
+    # im_blur = cv2.medianBlur(img,5) # does not wokr that well
+
+    im_gray = cv2.cvtColor(im_blur, cv2.COLOR_BGR2GRAY)
+
+    thresh = 160  # use 200 when you want to see boxes around letters for debugging
     return cv2.threshold(
         im_gray, thresh, 255, type=0)[1]
 

@@ -4,6 +4,7 @@ import numpy as np
 from field_recognizer.resizing_for_recognizers import resize
 
 EMNIST_SIZE = 28
+LETTER_BORDER = 2
 
 
 def is_not_space(img):
@@ -26,7 +27,8 @@ def thicken(img):
 def preprocess_img(img):
     return resize(
         thicken(img),
-        EMNIST_SIZE
+        EMNIST_SIZE,
+        LETTER_BORDER
     )
 
 
@@ -38,8 +40,6 @@ def recognize_letters(imgs, model, result_mapper):
 
 
 def recognize_letter(img, model, result_mapper):
-    # TODO ADAM
-    # print(img)
     img_p = img.copy()
     img_p = process_img(img_p)
     # print(img_p)
@@ -50,9 +50,7 @@ def recognize_letter(img, model, result_mapper):
 
 def predict(img, model, result_mapper):
     pred = model.predict(np.array([img]))
-    # print(pred)
     pred_val = result_mapper.get(pred[0].argmax())
-    # print(f"Prediction: {pred_val}")
     return pred_val
 
 

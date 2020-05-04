@@ -2,22 +2,23 @@ import cv2
 import math
 
 
-def resize(img, dimension):
+def resize(img, full_dimension, border):
     w, h = img.shape
     maxi = max([w, h])
 
+    dimension = full_dimension - (border * 2)
     r = dimension / maxi
-    new_w = math.floor(w * r)
-    new_h = math.floor(h * r)
+    new_w = round(w * r)
+    new_h = round(h * r)
 
     res = cv2.resize(img, dsize=(new_h, new_w), interpolation=cv2.INTER_CUBIC)
     if max(res.shape) != dimension:
-        raise ValueError("not good size of resized shape, fix!")
+        raise ValueError(f"not good size of resized shape: {res.shape}, fix! ")
 
-    bottom = math.ceil((dimension - new_w) / 2)
-    top = math.floor((dimension - new_w) / 2)
-    right = math.ceil((dimension - new_h) / 2)
-    left = math.floor((dimension - new_h) / 2)
+    bottom = math.ceil((dimension - new_w) / 2) + border
+    top = math.floor((dimension - new_w) / 2) + border
+    right = math.ceil((dimension - new_h) / 2) + border
+    left = math.floor((dimension - new_h) / 2) + border
     res = cv2.copyMakeBorder(res, top, bottom, left, right, cv2.BORDER_CONSTANT, value=255)
 
     return res
