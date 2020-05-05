@@ -81,22 +81,20 @@ there are 3 possible types "letter", "numbers", "boxes"
 ## Road map
 
 #### Character Recognition
- * /DONE/ retrain model on capital letters only
- * /DONE/ enrich emnist dataset by different letter positioning
- * enrich emnist dataset by different letter thickness
- * Add model for numbers
- * Solve czech characters, either
+ * [x] retrain model on capital letters only
+ * [x] enrich emnist dataset by different letter positioning
+ * [ ] enrich emnist dataset by different letter thickness
+ * [ ] Add model for numbers
+ * [ ] Solve czech characters, either
    * find different dataset with czech diacritics
    * enrich emnist dataset by letters with diacritics 
    * Add second clasifier, that would recognize diacritics  / accute(') / carron(ˇ) / none  / 
    
 #### Refactoring
- * Restructure repository to separate code from data
- * consider refactoring to original emnist dataset structure instead of this csv data
+ * [ ] Restructure repository to separate code from data
+ * [ ] consider refactoring to original emnist dataset structure instead of this csv data
 
 #### Preprocessing
- * smarter threasholding
- * smarter corner classification
+ * [ ] smarter threasholding
+ * [ ] smarter corner classification
  
-
-
