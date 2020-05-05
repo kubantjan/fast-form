@@ -81,6 +81,7 @@ there are 3 possible types "letter", "numbers", "boxes"
 ## Road map
 
 #### Character Recognition
+ * /DONE/ retrain model on capital letters only
  * /DONE/ enrich emnist dataset by different letter positioning
  * enrich emnist dataset by different letter thickness
  * Add model for numbers
