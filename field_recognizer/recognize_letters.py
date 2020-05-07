@@ -32,18 +32,16 @@ def preprocess_img(img):
     )
 
 
-def recognize_letters(imgs, model, result_mapper):
-    res = [recognize_letter(preprocess_img(img), model, result_mapper) if is_not_space(img) else (" ", 1.0, img) for img
+def recognize_chars(imgs, model, result_mapper):
+    res = [recognize_char(preprocess_img(img), model, result_mapper) if is_not_space(img) else (" ", 1.0, img) for img
            in imgs]
 
     return zip(*res)
 
 
-def recognize_letter(img, model, result_mapper):
+def recognize_char(img, model, result_mapper):
     img_p = img.copy()
-    img_p = process_img(img_p)
-    # print(img_p)
-    # print("type",type(img_p))
+    img_p = prepare_for_model_format(img_p)
     prediction = predict(img_p, model, result_mapper)
     return prediction, 0.5, img
 
@@ -54,7 +52,7 @@ def predict(img, model, result_mapper):
     return pred_val
 
 
-def process_img(img):
+def prepare_for_model_format(img):
     img = cv2.bitwise_not(img)
     img = img.transpose()
     img = img.ravel()

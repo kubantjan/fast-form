@@ -24,10 +24,10 @@
     },
     {
       "name": "Datum vyplnění",
-      "type": "letters",
+      "type": "numbers",
       "topLeft": {
         "x": 197,
-        "y": 1378
+        "y": 1388
       },
       "numberOfBoxes": 10,
       "boxWidth": 70,

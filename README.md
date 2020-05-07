@@ -36,7 +36,10 @@ fast-form
     ...
  ...
 ```
-and then run `field_recognizer/emnist-neural-network.ipynb` in jupyter notebook.
+
+and then first run `field_recognizer/enrich_dataset.ipynb` in jupyter notebook and after that use
+ `field_recognizer/emnist-neural-network.ipynb` twice, once for type numbers, once for type letters 
+ (see inside of notebook )
 
 ## Example form configuration - JSON
 

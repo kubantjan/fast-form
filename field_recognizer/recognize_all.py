@@ -1,8 +1,4 @@
-from field_recognizer.recognize_letters import recognize_letters
-
-
-def recognize_numbers(imgs):
-    return [1] * len(imgs), [0.5] * len(imgs), imgs
+from field_recognizer.recognize_letters import recognize_chars
 
 
 def black_ratio(img):
@@ -23,14 +19,14 @@ def calculate_black_ratio(fields):
     return sum(boxes) / len(boxes)
 
 
-def recognize(form_data: dict, model, result_mapper):
+def recognize(form_data: dict, model_letters, model_numbers, letter_mapper, number_mapper):
     avg_box_black_ratio = calculate_black_ratio(form_data["fields"])
     fields = []
     for field in form_data["fields"]:
         if field["type"] == "letters":
-            recognized, accuracy, img_transf = recognize_letters(field["box_data"], model, result_mapper)
+            recognized, accuracy, img_transf = recognize_chars(field["box_data"], model_letters, letter_mapper)
         elif field["type"] == "numbers":
-            recognized, accuracy, img_transf = recognize_numbers(field["box_data"], model, result_mapper)
+            recognized, accuracy, img_transf = recognize_chars(field["box_data"], model_numbers, number_mapper)
         elif field["type"] == "boxes":
             recognized, accuracy, img_transf = recognize_boxes(field["box_data"], avg_box_black_ratio)
         else:
