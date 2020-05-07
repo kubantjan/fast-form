@@ -90,6 +90,8 @@ there are 3 possible types "letter", "numbers", "boxes"
    * find different dataset with czech diacritics
    * enrich emnist dataset by letters with diacritics 
    * Add second clasifier, that would recognize diacritics  / accute(') / carron(ˇ) / none  / 
+   * Create our own, small dataset (maybe adding the diacritics to current dataset)
+    and use methods here: https://arxiv.org/pdf/1904.08095.pdf
    
 #### Refactoring
  * [ ] Restructure repository to separate code from data
