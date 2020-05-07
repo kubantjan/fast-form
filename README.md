@@ -88,7 +88,7 @@ there are 3 possible types "letter", "numbers", "boxes"
  * [x] enrich emnist dataset by different letter positioning
  * [ ] use this notebook to improve the model https://www.kaggle.com/tarunkr/digit-recognition-tutorial-cnn-99-67-accuracy
  * [ ] enrich emnist dataset by different letter thickness
- * [ ] Add model for numbers
+ * [x] Add model for numbers
  * [ ] Solve czech characters, either
    * find different dataset with czech diacritics
    * enrich emnist dataset by letters with diacritics 
