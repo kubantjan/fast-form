@@ -96,6 +96,25 @@ there are 3 possible types "letter", "numbers", "boxes"
  * [ ] consider refactoring to original emnist dataset structure instead of this csv data
 
 #### Preprocessing
- * [ ] smarter threasholding
+ * [ ] smarter thresholding
  * [ ] smarter corner classification
+ * [ ] completely drop corners, orient page based on the original file provided (fitting text on text)
+
  
+#### Configuration
+ * [ ] location of text via top left corner, bottom right corner plus number of letters
+ * [ ] create a tool for config file creation
+ 
+#### Packaging, proper output
+* [ ] package it:
+
+The program should get the following parameters:
+
+    - folder with scanned files
+    - path to original document
+    - config file with location of answers in the original document via coordinates in pixels
+
+And it should output:
+
+    - excel file and csv file (or make it a parameter) with the answers and their accuracies and somehow also the 
+    parts of the original scan that were used for the recognition. Maybe in separate folder, properly named.
