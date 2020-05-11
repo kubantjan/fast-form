@@ -1,10 +1,9 @@
-from field_recognizer.recognize_boxes import calculate_black_ratio, recognize_boxes
+from field_recognizer.recognize_boxes import calculate_box_stats, recognize_boxes
 from field_recognizer.recognize_letters import recognize_chars
 
 
 def recognize(form_data: dict, model_letters, model_numbers, letter_mapper, number_mapper):
-    box_stats = calculate_black_ratio(form_data["fields"])
-    print(box_stats)
+    box_stats = calculate_box_stats(form_data["fields"])
     fields = []
     for field in form_data["fields"]:
         if field["type"] == "letters":
