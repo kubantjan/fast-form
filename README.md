@@ -86,7 +86,7 @@ there are 3 possible types "letter", "numbers", "boxes"
 #### Character Recognition
  * [x] retrain model on capital letters only
  * [x] enrich emnist dataset by different letter positioning
- * [ ] use this notebook to improve the model https://www.kaggle.com/tarunkr/digit-recognition-tutorial-cnn-99-67-accuracy
+ * [x] use this notebook to improve the model https://www.kaggle.com/tarunkr/digit-recognition-tutorial-cnn-99-67-accuracy
  * [ ] enrich emnist dataset by different letter thickness
  * [x] Add model for numbers
  * [ ] Solve czech characters, either

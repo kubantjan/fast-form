@@ -1,3 +1,5 @@
+import json
+
 from keras.models import model_from_json
 
 
@@ -28,8 +30,6 @@ def load_model(model_structure_path, model_weights_path):
 # print("%s: %.2f%%" % (loaded_model.metrics_names[1], scores[1] * 100))
 
 def load_result_mapper(path):
-    with open(path) as f:
-        s = f.read()[:-1]  # remove last char \n
-    a = [l.split(" ") for l in s.split("\n")]
-    res_mapper = {int(l[0]): chr(int(l[1])) for l in a}
-    return res_mapper
+    with open(path, 'r') as f:
+        raw = json.load(f)
+    return {int(k): v for k, v in raw.items()}
