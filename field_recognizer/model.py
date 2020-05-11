@@ -6,7 +6,7 @@ def load_model(model_structure_path, model_weights_path):
     # json_file = open('model_data/model.json', 'r')
 
     # load model structure
-    with  open(model_structure_path, 'r') as json_file:
+    with open(model_structure_path, 'r') as json_file:
         loaded_model_json = json_file.read()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
