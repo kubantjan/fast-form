@@ -22,57 +22,48 @@ class FormStructureParser:
         return form_data
 
     def process_field(self, field_def, form):
-        boxCount = field_def["numberOfBoxes"]
-        if field_def["orientation"] == "horizontal":
-            x = field_def["topLeft"]["x"]
-            width = field_def["boxWidth"] * boxCount + field_def['spaceBetweenBoxes'] * (boxCount - 1)
-            y = field_def["topLeft"]["y"]
-            height = field_def["boxHeight"]
-            field_def["img"] = form[y:y + height, x:x + width]
 
-            box_data = self.processHorizontalBoxes(field_def)
+        x1 = field_def["topLeft"]["x"]
+        x2 = field_def["bottomRight"]["x"]
+        y1 = field_def["topLeft"]["y"]
+        y2 = field_def["bottomRight"]["y"]
 
-        elif field_def["orientation"] == "vertical":
-            x = field_def["topLeft"]["x"]
-            width = field_def["boxWidth"]
-            y = field_def["topLeft"]["y"]
-            height = field_def["boxHeight"] * boxCount + field_def['spaceBetweenBoxes'] * (boxCount - 1)
-            field_def["img"] = form[y:y + height, x:x + width]
-            box_data = self.processVerticalBoxes(field_def)
+        field_def["img"] = form[y1:y2, x1:x2]
+        if field_def["orientation"] == "vertical":
+            box_data = self.process_vertical_boxes(field_def)
         else:
-            m = "Attribute 'orientation' in form structure format have to be 'vertical' or 'horizontal'"
-            raise ValueError(m)
+            box_data = self.process_horizontal_boxes(field_def)
 
         field_def["box_data"] = box_data
         return field_def
 
-    def processHorizontalBoxes(self, field_def):
-        x = 0
+    def process_horizontal_boxes(self, field_def):
         box_data = []
         field_img = field_def["img"]
+        x1 = field_def["topLeft"]["x"]
+        x2 = field_def["bottomRight"]["x"]
+        space = field_def["spaceBetweenBoxes"]
+        int_split = np.linspace(0, x2 - x1 + space, field_def["numberOfBoxes"] + 1)
 
-        for i in range(field_def["numberOfBoxes"]):
-            w = field_def["boxWidth"]
-            step = w + field_def["spaceBetweenBoxes"]
-            box_img = field_img[:, x:x + w]
+        for xx1, xx2 in zip(int_split[:-1], int_split[1:]):
+            box_img = field_img[:, int(xx1): int(xx2 - space / 2)]
             trimmed_box = self.trim_whitespace(box_img)
             box_data.append(trimmed_box)
-            x = x + step
 
         return box_data
 
-    def processVerticalBoxes(self, field_def):
-        y = 0
+    def process_vertical_boxes(self, field_def):
         box_data = []
         field_img = field_def["img"]
+        y1 = field_def["topLeft"]["y"]
+        y2 = field_def["bottomRight"]["y"]
+        space = field_def["spaceBetweenBoxes"]
+        int_split = np.linspace(0, y2 - y1 + space, field_def["numberOfBoxes"] + 1)
+        for yy1, yy2 in zip(int_split[:-1], int_split[1:]):
+            box_img = field_img[int(yy1 - space / 2): int(yy2 - space / 2), :]
 
-        for i in range(field_def["numberOfBoxes"]):
-            h = field_def["boxHeight"]
-            step = h + field_def["spaceBetweenBoxes"]
-            box_img = field_img[y:y + h, :]
             trimmed_box = self.trim_whitespace(box_img)
             box_data.append(trimmed_box)
-            y = y + step
 
         return box_data
 

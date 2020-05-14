@@ -7,11 +7,13 @@
       "type": "boxes",
       "topLeft": {
         "x": 306,
-        "y": 1720
+        "y": 1725
+      },
+      "bottomRight": {
+        "x": 384,
+        "y": 2030
       },
       "numberOfBoxes": 5,
-      "boxWidth": 78,
-      "boxHeight": 60,
       "spaceBetweenBoxes": 1,
       "orientation": "vertical",
       "answers": [
@@ -29,9 +31,11 @@
         "x": 197,
         "y": 1388
       },
+      "bottomRight": {
+        "x": 897,
+        "y": 1488
+      },
       "numberOfBoxes": 10,
-      "boxWidth": 70,
-      "boxHeight": 100,
       "spaceBetweenBoxes": 0,
       "orientation": "horizontal"
     },
@@ -42,9 +46,11 @@
         "x": 197,
         "y": 1111
       },
+      "bottomRight": {
+        "x": 1042,
+        "y": 1211
+      },
       "numberOfBoxes": 13,
-      "boxWidth": 65,
-      "boxHeight": 100,
       "spaceBetweenBoxes": 0,
       "orientation": "horizontal"
     },
@@ -55,9 +61,11 @@
         "x": 306,
         "y": 2285
       },
+      "bottomRight": {
+        "x": 384,
+        "y": 2406
+      },
       "numberOfBoxes": 2,
-      "boxWidth": 78,
-      "boxHeight": 60,
       "spaceBetweenBoxes": 1,
       "orientation": "vertical",
       "answers": [
