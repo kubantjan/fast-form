@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
+import pandas as pd
 
 
-def normalize(img):
+def normalize(img, show_borders=False):
     """Converts `im` to black and white.
 
     Applying a threshold to a grayscale image will make every pixel either
@@ -12,22 +13,34 @@ def normalize(img):
     # im_blur = cv2.medianBlur(img,5) # does not wokr that well
 
     im_gray = cv2.cvtColor(im_blur, cv2.COLOR_BGR2GRAY)
-
-    thresh = 160  # use 200 when you want to see boxes around letters for debugging
+    if show_borders:
+        thresh = 240
+    else:
+        thresh = 160
     return cv2.threshold(
         im_gray, thresh, 255, type=0)[1]
 
 
-def get_approx_contour(contour, tol=.01):
-    """Gets rid of 'useless' points in the contour."""
-    epsilon = tol * cv2.arcLength(contour, True)
-    return cv2.approxPolyDP(contour, epsilon, True)
+def is_approx_corner(x):
+    rect = cv2.boundingRect(x)
+    side_ratio = rect[2]/rect[3]
+    return (side_ratio > 0.5) and (side_ratio < 2)
 
 
-def get_contours(image_gray):
-    contours, _ = cv2.findContours(
-        image_gray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    return map(get_approx_contour, contours)
+def get_corners(im):
+    cont, hie = cv2.findContours(255 - im, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    return (
+        pd.DataFrame([cont, hie[0]])
+            .T
+            .assign(size=lambda df: df[0].apply(cv2.contourArea))
+            .sort_values(by="size", ascending=False)
+            .loc[lambda df: df[1].apply(lambda x: (x[2] == -1) & (x[3] == -1))]
+            .loc[lambda df: df[0].apply(is_approx_corner)]
+            .iloc[0:4]
+            [0]
+            .values
+    )
 
 
 def get_bounding_rect(contour):
@@ -65,7 +78,7 @@ def crop_to_corners(im, outmost):
     return im[y_min:y_max, x_min:x_max]
 
 
-def preprocess(im, config) -> np.ndarray:
+def preprocess(im, config, show_borders=False) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
@@ -77,11 +90,9 @@ def preprocess(im, config) -> np.ndarray:
     - Scans each line for the marked alternative
     """
 
-    im = normalize(im)
+    im = normalize(im, show_borders)
 
-    contours = get_contours(im)
-
-    corners = sorted(contours, key=lambda x: - cv2.contourArea(x))[1:5]
+    corners = get_corners(im)
 
     outmost = sort_points_counter_clockwise(get_outmost_points(corners))
 
