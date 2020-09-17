@@ -13,13 +13,13 @@ Then set it up
 ```
 make setup
 ```
-## Installing new dependencies added on remote
+### Installing new dependencies added on remote
 
 ```
 pip-sync
 ```
 
-## Adding dependencies:
+### Adding dependencies:
 
 add line to `requirements.in` and then run
 ```
