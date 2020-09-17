@@ -1,18 +1,27 @@
 # fast-form
 project from UniHack hackathon, helps to extract data from forms
 
-## Installing dependencies
+## Setting up
+create clean environment python 3.8:
+```
+conda create -n fast-form python=3.8 -y
+conda activate fast-form
+```
 
-first run 
+Then set it up
 
 ```
-pip install pip-tools
+make setup
+```
+## Installing new dependencies added on remote
+
+```
 pip-sync
 ```
 
-adding dependencies:
+## Adding dependencies:
 
-add line to requirements.in and then run
+add line to `requirements.in` and then run
 ```
 pip-compile
 ```
