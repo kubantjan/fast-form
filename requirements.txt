@@ -23,7 +23,7 @@ cycler==0.10.0            # via matplotlib
 decorator==4.4.2          # via ipython
 defusedxml==0.6.0         # via nbconvert
 distlib==0.3.1            # via virtualenv
-django==3.0.5             # via image
+django==3.0.7             # via image
 entrypoints==0.3          # via nbconvert
 filelock==3.0.12          # via virtualenv
 gast==0.3.3               # via tensorflow
