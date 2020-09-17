@@ -1,0 +1,31 @@
+{"width": 1885,
+    "height": 2609,
+    "fields": [
+        {
+            "name": "1",
+            "type": "boxes",
+            "topLeft": {
+                "x": 300,
+                "y": 2226
+            },
+            "numberOfBoxes": 4,
+            "boxWidth": 78,
+            "boxHeight": 60,
+            "spaceBetweenBoxes": 1,
+            "orientation": "vertical"
+        },
+        {
+            "name": "1",
+            "type": "letters",
+            "topLeft": {
+                "x": 197,
+                "y": 1378
+            },
+            "numberOfBoxes": 25,
+            "boxWidth": 66,
+            "boxHeight": 100,
+            "spaceBetweenBoxes": 0,
+            "orientation": "horizontal"
+        }
+    ]
+}

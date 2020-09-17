@@ -1,6 +1,8 @@
 from pylab import *
 from scipy.stats import norm
 
+from structure_parser.form_structure_parser import FieldType
+
 
 def black_count(img):
     return sum(sum(img == 0))
@@ -24,7 +26,7 @@ def recognize_boxes(imgs, box_stats):
 
 
 def calculate_box_stats(fields):
-    boxes = [black_count(img) for field in fields for img in field["box_data"] if field["type"] == "boxes"]
+    boxes = [black_count(img) for field in fields for img in field.box_data if field.type == FieldType.BOXES]
     mu = np.mean(boxes)
     empty = [box for box in boxes if box >= mu]
     full = [box for box in boxes if box <= mu]

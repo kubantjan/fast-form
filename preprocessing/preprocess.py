@@ -1,103 +1,70 @@
 import cv2
 import numpy as np
-import pandas as pd
+
+from config.configuration import ImageSiftResult, Template
 
 
-def normalize(img, show_borders=False):
+def normalize(img: np.ndarray) -> np.ndarray:
     """Converts `im` to black and white.
 
     Applying a threshold to a grayscale image will make every pixel either
     fully black or fully white."""
 
-    im_blur = cv2.GaussianBlur(img, (5, 5), 0)
-    # im_blur = cv2.medianBlur(img,5) # does not wokr that well
+    im_blur = cv2.GaussianBlur(img, (7, 7), 0)
 
     im_gray = cv2.cvtColor(im_blur, cv2.COLOR_BGR2GRAY)
-    if show_borders:
-        thresh = 240
+    im_thresh = cv2.adaptiveThreshold(im_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    return im_thresh
+
+
+def get_image_sift_result(image: np.ndarray) -> ImageSiftResult:
+    sift = cv2.xfeatures2d.SIFT_create()
+    # find the keypoints and descriptors with SIFT
+    key_points, descriptions = sift.detectAndCompute(image, None)
+    return ImageSiftResult(key_points, descriptions)
+
+
+def create_template(template_image_path: str) -> Template:
+    image = cv2.imread(template_image_path)
+    sift_result = get_image_sift_result(image)
+    return Template(sift_result, image)
+
+
+def fit_image_to_template(image: np.ndarray, template: Template):
+    # based on https://towardsdatascience.com/image-stitching-using-opencv-817779c86a83
+    sift_result = get_image_sift_result(image)
+    bf = cv2.BFMatcher()
+    matches = bf.knnMatch(sift_result.descriptions, template.sift_result.descriptions, k=2)
+
+    # Apply ratio test
+    good_matches = []
+    for match in matches:
+        if match[0].distance < 0.5 * match[1].distance:
+            good_matches.append(match)
+    good_matches = np.asarray(good_matches)
+
+    if len(good_matches[:, 0]) >= 4:
+        image_similarities = np.float32(
+            [sift_result.key_points[match.queryIdx].pt for match in good_matches[:, 0]]
+        ).reshape(-1, 1, 2)
+        template_similarities = np.float32(
+            [template.sift_result.key_points[match.trainIdx].pt for match in good_matches[:, 0]]).reshape(-1, 1, 2)
+        homography_matrix, _ = cv2.findHomography(image_similarities, template_similarities, cv2.RANSAC, 5.0)
+
+        return cv2.warpPerspective(image, homography_matrix, (template.image.shape[1], template.image.shape[0]))
     else:
-        thresh = 160
-    return cv2.threshold(
-        im_gray, thresh, 255, type=0)[1]
+        raise AssertionError("Cant find enough keypoints.")
 
 
-def is_approx_corner(x):
-    rect = cv2.boundingRect(x)
-    side_ratio = rect[2]/rect[3]
-    return (side_ratio > 0.5) and (side_ratio < 2)
-
-
-def get_corners(im):
-    cont, hie = cv2.findContours(255 - im, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-    return (
-        pd.DataFrame([cont, hie[0]])
-            .T
-            .assign(size=lambda df: df[0].apply(cv2.contourArea))
-            .sort_values(by="size", ascending=False)
-            .loc[lambda df: df[1].apply(lambda x: (x[2] == -1) & (x[3] == -1))]
-            .loc[lambda df: df[0].apply(is_approx_corner)]
-            .iloc[0:4]
-            [0]
-            .values
-    )
-
-
-def get_bounding_rect(contour):
-    rect = cv2.minAreaRect(contour)
-    box = cv2.boxPoints(rect)
-    return np.int0(box)
-
-
-def features_distance(f1, f2):
-    return np.linalg.norm(np.array(f1) - np.array(f2))
-
-
-def sort_points_counter_clockwise(points):
-    origin = np.mean(points, axis=0)
-
-    def positive_angle(p):
-        x, y = p - origin
-        ang = np.arctan2(y, x)
-        return 2 * np.pi + ang if ang < 0 else ang
-
-    return sorted(points, key=positive_angle)
-
-
-def get_outmost_points(contours):
-    all_points = np.concatenate(contours)
-    return get_bounding_rect(all_points)
-
-
-def crop_to_corners(im, outmost):
-    x_max = max([x[0] for x in outmost])
-    x_min = min([x[0] for x in outmost])
-    y_max = max([x[1] for x in outmost])
-    y_min = min([x[1] for x in outmost])
-
-    return im[y_min:y_max, x_min:x_max]
-
-
-def preprocess(im, config, show_borders=False) -> np.ndarray:
+def preprocess(im, template: Template) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
     - Normalizes image
-    - Finds contours
-    - Finds corners among all contours
-    - Finds 'outmost' points of all corners
-    - Applies perpsective transform to get a bird's eye view
-    - Scans each line for the marked alternative
+    - fits to original
     """
+    normalized_image = normalize(im)
 
-    im = normalize(im, show_borders)
+    fitted_image = fit_image_to_template(normalized_image, template=template)
 
-    corners = get_corners(im)
-
-    outmost = sort_points_counter_clockwise(get_outmost_points(corners))
-
-    im = crop_to_corners(im, outmost)
-
-    im = cv2.resize(im, (config["width"], config["height"]))
-
-    return im
+    return fitted_image

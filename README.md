@@ -4,7 +4,7 @@ project from UniHack hackathon, helps to extract data from forms
 ## Setting up
 create clean environment python 3.8:
 ```
-conda create -n fast-form python=3.8 -y
+conda create -n fast-form python=3.7 -y
 conda activate fast-form
 ```
 
