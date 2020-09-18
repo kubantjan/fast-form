@@ -85,6 +85,9 @@ tests/form_for_test/config.json
  * [ ] create a tool for config file creation
  
 #### Packaging, proper output
+* [ ] prepare for pdf with multiple questionnaires
+* [ ] create config for the current questionnaire we are working on
+* [ ] add "made mistake" functionality (whole box filled in probably?)
 * [ ] package it:
 
 The program should get the following parameters:
