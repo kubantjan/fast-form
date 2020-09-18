@@ -13,7 +13,7 @@
       },
       "number_of_boxes": 5,
       "space_between_boxes": 1,
-      "orientation": "vertical",
+      "orientation": "VERTICAL",
       "answers": [
         "Pořád!",
         "V noci 10 hodin a po obědě šlofíček.",
@@ -35,7 +35,7 @@
       },
       "number_of_boxes": 10,
       "space_between_boxes": 10,
-      "orientation": "horizontal"
+      "orientation": "HORIZONTAL"
     },
     {
       "name": "Jméno týmu",
@@ -50,7 +50,7 @@
       },
       "number_of_boxes": 13,
       "space_between_boxes": 20,
-      "orientation": "horizontal"
+      "orientation": "HORIZONTAL"
     },
     {
       "name": "Chcete přepis, nebo zmrzlinu?",
@@ -65,7 +65,7 @@
       },
       "number_of_boxes": 2,
       "space_between_boxes": 1,
-      "orientation": "vertical",
+      "orientation": "VERTICAL",
       "answers": [
         "Dotazníky a přepisování",
         "Procházka a zmrzlina!"

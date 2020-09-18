@@ -78,6 +78,8 @@ tests/form_for_test/config.json
  * [x] smarter thresholding
  * [x] smarter corner classification
  * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
+ * [ ] better drop noise when cutting to the information area
+ * [ ] improve denoising for boxes, improve accuracy computation there
 
  
 #### Configuration

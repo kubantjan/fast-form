@@ -14,6 +14,11 @@ class Point:
     y: int
 
 
+class Orientation(str, Enum):
+    HORIZONTAL = 'HORIZONTAL'
+    VERTICAL = 'VERTICAL'
+
+
 class FieldType(str, Enum):
     LETTERS = 'LETTERS'
     NUMBERS = 'NUMBERS'
@@ -22,7 +27,7 @@ class FieldType(str, Enum):
 
 @dataclass
 class Field:
-    orientation: str
+    orientation: Orientation
     space_between_boxes: int
     number_of_boxes: int
     name: str
@@ -47,7 +52,8 @@ class FormStructureParser:
     """
 
     def __init__(self, config: Dict):
-        self.form_structure = dacite.from_dict(data_class=FormData, data=config, config=Config(cast=[FieldType]))
+        self.form_structure = dacite.from_dict(data_class=FormData, data=config,
+                                               config=Config(cast=[FieldType, Orientation]))
 
     def process_form(self, form_img) -> FormData:
         fields = []
@@ -67,7 +73,7 @@ class FormStructureParser:
         y2 = field_def.bottom_right.y
 
         field_def.img = form[y1:y2, x1:x2]
-        if field_def.orientation == "vertical":
+        if field_def.orientation == Orientation.VERTICAL:
             box_data = self.process_vertical_boxes(field_def)
         else:
             box_data = self.process_horizontal_boxes(field_def)
