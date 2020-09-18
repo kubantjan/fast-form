@@ -51,44 +51,9 @@ and then first run `field_recognizer/enrich_dataset.ipynb` in jupyter notebook a
  (see inside of notebook )
 
 ## Example form configuration - JSON
-
-``` json
-{
-  "fields": [
-    {
-      "name": "Example",
-      "type": "letters",
-      "topLeft": {
-        "x": 10,
-        "y": 20
-      },
-      "numberOfBoxes": 10,
-      "boxWidth": 3,
-      "boxHeight": 2,
-      "spaceBetweenBoxes": 1,
-      "orientation": "horizontal"
-    },
-    {
-      "name": "Example2",
-      "type": "boxes",
-      "topLeft": {
-        "x": 10,
-        "y": 60
-      },
-      "numberOfBoxes": 10,
-      "boxWidth": 3,
-      "boxHeight": 2,
-      "spaceBetweenBoxes": 1,
-      "orientation": "vertical"
-    }
-  ],
-  "size": {
-    "width": 740,
-    "height": 1049
-  }
-}
 ```
-there are 3 possible types "letter", "numbers", "boxes"
+tests/form_for_test/config.json
+```
 
 ## Road map
 
@@ -110,13 +75,13 @@ there are 3 possible types "letter", "numbers", "boxes"
  * [ ] consider refactoring to original emnist dataset structure instead of this csv data
 
 #### Preprocessing
- * [ ] smarter thresholding
- * [ ] smarter corner classification
- * [ ] completely drop corners, orient page based on the original file provided (fitting text on text)
+ * [x] smarter thresholding
+ * [x] smarter corner classification
+ * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
 
  
 #### Configuration
- * [ ] location of text via top left corner, bottom right corner plus number of letters
+ * [x] location of text via top left corner, bottom right corner plus number of letters
  * [ ] create a tool for config file creation
  
 #### Packaging, proper output

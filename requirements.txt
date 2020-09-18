@@ -26,6 +26,7 @@ defusedxml==0.6.0         # via nbconvert
 distlib==0.3.1            # via virtualenv
 django==3.0.5             # via image
 entrypoints==0.3          # via nbconvert
+et-xmlfile==1.0.1         # via openpyxl
 filelock==3.0.12          # via virtualenv
 gast==0.2.2               # via tensorflow
 google-auth-oauthlib==0.4.1  # via tensorboard
@@ -41,6 +42,7 @@ ipykernel==5.3.4          # via -r requirements.in, ipywidgets, jupyter, jupyter
 ipython-genutils==0.2.0   # via nbformat, notebook, qtconsole, traitlets
 ipython==7.18.1           # via ipykernel, ipywidgets, jupyter-console
 ipywidgets==7.5.1         # via jupyter
+jdcal==1.4.1              # via openpyxl
 jedi==0.17.2              # via ipython
 jinja2==2.11.2            # via nbconvert, notebook
 jsonschema==3.2.0         # via nbformat
@@ -66,6 +68,7 @@ notebook==6.1.4           # via jupyter, widgetsnbextension
 numpy==1.18.3             # via -r requirements.in, h5py, keras, keras-applications, keras-preprocessing, matplotlib, opencv-contrib-python, opt-einsum, pandas, scipy, tensorboard, tensorflow
 oauthlib==3.1.0           # via requests-oauthlib
 opencv-contrib-python==4.4.0.42  # via -r requirements.in
+openpyxl==3.0.5           # via -r requirements.in
 opt-einsum==3.2.1         # via tensorflow
 packaging==20.4           # via bleach
 pandas==1.0.3             # via -r requirements.in

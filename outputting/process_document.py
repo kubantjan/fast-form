@@ -7,11 +7,11 @@ from config.configuration import PathConfig, Models
 from field_recognizer.model import load_model
 from field_recognizer.recognize_all import recognize
 from preprocessing.preprocess import preprocess, create_template
-from structure_parser.form_structure_parser import FormStructureParser
+from structure_parser.form_structure_parser import FormStructureParser, FormData
 
 
-def load_path_config(config_path) -> PathConfig:
-    with open(config_path, "rb") as f:
+def load_path_configuration(path_configuration) -> PathConfig:
+    with open(path_configuration, "rb") as f:
         return dacite.from_dict(data_class=PathConfig, data=json.loads(f.read()))
 
 
@@ -40,14 +40,14 @@ def load_models(model_data_location: str):
                   number_mapper=number_mapper)
 
 
-def process_image(path_to_path_config: str, image_path: str):
-    path_config = load_path_config(path_to_path_config)
+def process_document(path_to_path_config: str, document_path: str) -> FormData:
+    path_config = load_path_configuration(path_to_path_config)
     with open(path_config.form_structure_config_path, 'r') as f:
         form_structure_parser = FormStructureParser(json.load(f))
     models = load_models(path_config.model_data_location)
     template = create_template(path_config.template_image_path)
 
-    image = cv2.imread(image_path)
+    image = cv2.imread(document_path)
     image = preprocess(image, template)
     form_data = form_structure_parser.process_form(image)
     form_data = recognize(form_data, models)

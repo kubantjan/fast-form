@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Union
 
 import cv2
 import dacite
@@ -29,13 +29,15 @@ class Field:
     type: FieldType
     top_left: Point
     bottom_right: Point
+    recognized: Optional[List[Union[str, bool]]] = None
+    accuracy: Optional[List[float]] = None
     answers: Optional[List[str]] = None
     img: Optional[np.array] = None
     box_data: Optional[List[np.ndarray]] = None
 
 
 @dataclass
-class ParsedForm:
+class FormData:
     fields: List[Field]
 
 
@@ -45,9 +47,9 @@ class FormStructureParser:
     """
 
     def __init__(self, config: Dict):
-        self.form_structure = dacite.from_dict(data_class=ParsedForm, data=config, config=Config(cast=[FieldType]))
+        self.form_structure = dacite.from_dict(data_class=FormData, data=config, config=Config(cast=[FieldType]))
 
-    def process_form(self, form_img) -> ParsedForm:
+    def process_form(self, form_img) -> FormData:
         fields = []
 
         for field in self.form_structure.fields:
@@ -82,7 +84,7 @@ class FormStructureParser:
         int_split = np.linspace(0, x2 - x1, field_def.number_of_boxes + 1)
 
         for xx1, xx2 in zip(int_split[:-1], int_split[1:]):
-            box_img = field_img[:, int(xx1) + int(space/2): int(xx2 - space / 2)]
+            box_img = field_img[:, int(xx1) + int(space / 2): int(xx2 - space / 2)]
             trimmed_box = self.trim_whitespace(box_img)
             box_data.append(trimmed_box)
         return box_data

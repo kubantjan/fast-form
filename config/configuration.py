@@ -26,7 +26,7 @@ class Configuration:
 class PathConfig:
     template_image_path: str
     form_structure_config_path: str
-    model_data_location: str
+    model_data_location: str = "./model_data"
 
 
 @dataclass
