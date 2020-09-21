@@ -2,9 +2,9 @@
 project from UniHack hackathon, helps to extract data from forms
 
 ## Setting up
-create clean environment python 3.8:
+create conda environment with python 3.7.9 and poppler:
 ```
-conda create -n fast-form python=3.7 -y
+conda env create -f conda.yml -y
 conda activate fast-form
 ```
 

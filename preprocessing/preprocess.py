@@ -1,7 +1,15 @@
+from typing import List, Tuple
+
 import cv2
 import numpy as np
 
-from config.configuration import ImageSiftResult, Template
+from config.configuration import ImageCv2, FormTemplates, ImageSiftResult, Template
+from preprocessing.image_sift import get_image_sift_result
+
+ENOUGH_GOOD_MATCHES_FOR_FIT = 4
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def normalize(img: np.ndarray) -> np.ndarray:
@@ -17,46 +25,46 @@ def normalize(img: np.ndarray) -> np.ndarray:
     return im_thresh
 
 
-def get_image_sift_result(image: np.ndarray) -> ImageSiftResult:
-    sift = cv2.xfeatures2d.SIFT_create()
-    # find the keypoints and descriptors with SIFT
-    key_points, descriptions = sift.detectAndCompute(image, None)
-    return ImageSiftResult(key_points, descriptions)
-
-
-def create_template(template_image_path: str) -> Template:
-    image = cv2.imread(template_image_path)
-    sift_result = get_image_sift_result(image)
-    return Template(sift_result, image)
-
-
-def fit_image_to_template(image: np.ndarray, template: Template):
+def get_good_matches_for_template(image_sift: ImageSiftResult, template_sift: ImageSiftResult) -> List[cv2.DMatch]:
     # based on https://towardsdatascience.com/image-stitching-using-opencv-817779c86a83
-    sift_result = get_image_sift_result(image)
+
     bf = cv2.BFMatcher()
-    matches = bf.knnMatch(sift_result.descriptions, template.sift_result.descriptions, k=2)
+    matches = bf.knnMatch(image_sift.descriptions, template_sift.descriptions, k=2)
 
     # Apply ratio test
     good_matches = []
     for match in matches:
         if match[0].distance < 0.5 * match[1].distance:
-            good_matches.append(match)
-    good_matches = np.asarray(good_matches)
+            good_matches.append(match[0])
+    return good_matches
 
-    if len(good_matches[:, 0]) >= 4:
+
+def find_best_template_match(image_sift: ImageSiftResult,
+                             templates: FormTemplates) -> Tuple[List[cv2.DMatch], Template, int]:
+    all_good_matches = [(get_good_matches_for_template(image_sift, template.sift), template, i)
+                        for i, template in enumerate(templates.templates)]
+    return max(all_good_matches, key=lambda good_matches_template: len(good_matches_template[0]))
+
+
+def fit_image_to_templates(image: ImageCv2, templates: FormTemplates) -> Tuple[ImageCv2, int]:
+    image_sift = get_image_sift_result(image)
+    good_matches, template, template_index = find_best_template_match(image_sift, templates)
+
+    if len(good_matches) >= ENOUGH_GOOD_MATCHES_FOR_FIT:
         image_similarities = np.float32(
-            [sift_result.key_points[match.queryIdx].pt for match in good_matches[:, 0]]
+            [image_sift.key_points[match.queryIdx].pt for match in good_matches]
         ).reshape(-1, 1, 2)
         template_similarities = np.float32(
-            [template.sift_result.key_points[match.trainIdx].pt for match in good_matches[:, 0]]).reshape(-1, 1, 2)
+            [template.sift.key_points[match.trainIdx].pt for match in good_matches]).reshape(-1, 1, 2)
         homography_matrix, _ = cv2.findHomography(image_similarities, template_similarities, cv2.RANSAC, 5.0)
 
-        return cv2.warpPerspective(image, homography_matrix, (template.image.shape[1], template.image.shape[0]))
+        return cv2.warpPerspective(image, homography_matrix,
+                                   (template.image.shape[1], template.image.shape[0])), template_index
     else:
         raise AssertionError("Cant find enough keypoints.")
 
 
-def preprocess(im, template: Template) -> np.ndarray:
+def preprocess(im, form_templates: FormTemplates) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image
@@ -65,6 +73,7 @@ def preprocess(im, template: Template) -> np.ndarray:
     """
     normalized_image = normalize(im)
 
-    fitted_image = fit_image_to_template(normalized_image, template=template)
+    fitted_image, template_index = fit_image_to_templates(normalized_image, templates=form_templates)
+    logger.info(f"Best fit page was {template_index}")
 
     return fitted_image

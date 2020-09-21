@@ -4,6 +4,8 @@ from typing import List, Any, Dict
 import cv2
 import numpy as np
 
+ImageCv2 = np.ndarray
+
 
 @dataclass
 class ImageSiftResult:
@@ -13,8 +15,13 @@ class ImageSiftResult:
 
 @dataclass
 class Template:
-    sift_result: ImageSiftResult
+    sift: ImageSiftResult
     image: np.ndarray
+
+
+@dataclass
+class FormTemplates:
+    templates: List[Template]
 
 
 @dataclass

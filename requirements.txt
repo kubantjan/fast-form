@@ -74,9 +74,10 @@ packaging==20.4           # via bleach
 pandas==1.0.3             # via -r requirements.in
 pandocfilters==1.4.2      # via nbconvert
 parso==0.7.1              # via jedi
+pdf2image==1.14.0         # via -r requirements.in
 pexpect==4.8.0            # via ipython
 pickleshare==0.7.5        # via ipython
-pillow==7.1.2             # via image, matplotlib
+pillow==7.1.2             # via image, matplotlib, pdf2image
 pre-commit==2.6.0         # via -r requirements.in
 prometheus-client==0.8.0  # via notebook
 prompt-toolkit==3.0.7     # via ipython, jupyter-console
