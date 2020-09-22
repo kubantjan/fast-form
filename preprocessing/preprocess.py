@@ -1,3 +1,4 @@
+import logging
 from typing import List, Tuple
 
 import cv2
@@ -5,24 +6,11 @@ import numpy as np
 
 from config.configuration import ImageCv2, FormTemplates, ImageSiftResult, Template
 from preprocessing.image_sift import get_image_sift_result
+from preprocessing.normalization import normalize
 
 ENOUGH_GOOD_MATCHES_FOR_FIT = 4
-import logging
 
 logger = logging.getLogger(__name__)
-
-
-def normalize(img: np.ndarray) -> np.ndarray:
-    """Converts `im` to black and white.
-
-    Applying a threshold to a grayscale image will make every pixel either
-    fully black or fully white."""
-
-    im_blur = cv2.GaussianBlur(img, (7, 7), 0)
-
-    im_gray = cv2.cvtColor(im_blur, cv2.COLOR_BGR2GRAY)
-    im_thresh = cv2.adaptiveThreshold(im_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-    return im_thresh
 
 
 def get_good_matches_for_template(image_sift: ImageSiftResult, template_sift: ImageSiftResult) -> List[cv2.DMatch]:

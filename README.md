@@ -78,8 +78,12 @@ tests/form_for_test/config.json
  * [x] smarter thresholding
  * [x] smarter corner classification
  * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
- * [ ] better drop noise when cutting to the information area
- * [ ] improve denoising for boxes, improve accuracy computation there
+ * [ ] better drop noise when cutting to the information area -> at the moment the cropping does not work well 
+ (connected with the point below)
+ * [ ] improve true/false computation for boxes, improve accuracy computation there -> use more the template
+ * [ ] speedup: at the moment as we are always matching to the whole template set, it is really slow
+ * [ ] saving of templates -> pickle is not working, but can be made working by 
+ https://stackoverflow.com/questions/10045363/pickling-cv2-keypoint-causes-picklingerror
 
  
 #### Configuration
@@ -88,15 +92,15 @@ tests/form_for_test/config.json
  
 #### Packaging, proper output
 * [ ] prepare for pdf with multiple questionnaires
-* [ ] create config for the current questionnaire we are working on
+* [x] create config for the current questionnaire we are working on
 * [ ] add "made mistake" functionality (whole box filled in probably?)
 * [ ] package it:
 
 The program should get the following parameters:
 
-    - folder with scanned files
-    - path to original document
-    - config file with location of answers in the original document via coordinates in pixels
+    - folder with scanned files (how should be new questionnaire recongized? new file for each?
+    - path to template document as pdf or jpg or something
+    - config file with location of answers in the template document via coordinates in pixels (see configuration above)
 
 And it should output:
 
