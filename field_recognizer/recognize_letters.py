@@ -1,5 +1,6 @@
 import cv2
 
+from field_recognizer.recognizing_dataclasses import RecognizingBoxResult, RecognizingResult
 from field_recognizer.resizing_for_recognizers import resize
 
 EMNIST_SIZE = 28
@@ -34,18 +35,24 @@ def preprocess_img(img):
     )
 
 
-def recognize_chars(imgs, model, result_mapper):
-    res = [recognize_char(preprocess_img(img), model, result_mapper) if is_not_space(img) else (" ", 1.0, img) for img
-           in imgs]
+def recognize_chars(imgs, model, result_mapper) -> RecognizingResult:
+    recognizing_box_results = [recognize_char(preprocess_img(img), model, result_mapper) for img in imgs]
+    return RecognizingResult(
+        accuracy=min(recognizing_box_results,
+                     key=lambda recognizing_box_result: recognizing_box_result.accuracy).accuracy,
+        recognizing_box_results=recognizing_box_results,
+        recognized="".join([res.recognized for res in recognizing_box_results])
+    )
 
-    return zip(*res)
 
-
-def recognize_char(img, model, result_mapper):
-    img_p = img.copy()
-    img_p = prepare_for_model_format(img_p)
-    prediction, accuracy = predict(img_p, model, result_mapper)
-    return prediction, accuracy, img
+def recognize_char(img, model, result_mapper) -> RecognizingBoxResult:
+    if is_not_space(img):
+        img_p = img.copy()
+        img_p = prepare_for_model_format(img_p)
+        prediction, accuracy = predict(img_p, model, result_mapper)
+        return RecognizingBoxResult(prediction, accuracy, img)
+    else:
+        return RecognizingBoxResult(" ", 1.0, img)
 
 
 def predict(img, model, result_mapper):

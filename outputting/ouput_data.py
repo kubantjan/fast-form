@@ -8,7 +8,7 @@ import pandas as pd
 from cv2 import cv2
 from openpyxl import load_workbook
 
-from structure_parser.form_structure_parser import FormData, FieldType
+from structure_parser.form_structure_parser import FormData
 
 
 def output_data(form_datas: List[FormData]) -> Tuple[pd.DataFrame, List[np.ndarray]]:
@@ -18,22 +18,10 @@ def output_data(form_datas: List[FormData]) -> Tuple[pd.DataFrame, List[np.ndarr
     for form_data in form_datas:
         for field in form_data.fields:
             field_dict = dict()
-            if field.type == FieldType.BOXES:
-                answer_index = int(np.argmax(np.array(field.recognized)))
-                if field.answers:
-                    answer = field.answers[answer_index]
-                else:
-                    answer = answer_index
-            elif field.type == FieldType.LETTERS:
-                answer = "".join(field.recognized)
-            elif field.type == FieldType.NUMBERS:
-                answer = "".join(field.recognized)
-            else:
-                raise AssertionError("Unexpected Field Type")
 
             field_dict['name'] = field.name
-            field_dict['data'] = answer
-            field_dict['acc'] = min(field.accuracy)
+            field_dict['data'] = field.recognizing_results.recognized
+            field_dict['acc'] = field.recognizing_results.accuracy
             form_images.append(field.img)
             form_dict[question_number] = field_dict
             question_number += 1
@@ -52,11 +40,11 @@ def save_data(df: pd.DataFrame, images: List[np.ndarray], document_path: str):
         for i, img in zip(df.index, images):
             temp_image_path = os.path.join(temp_image_folder, f"{i}_img.png")
             height = 60
-            ws.row_dimensions[i + 2].height = 50
             width = int(height / img.shape[0] * img.shape[1])
+            ws.row_dimensions[i + 2].height = 50
+
             dim = (width, height)
             resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-
 
             cv2.imwrite(temp_image_path, resized)
             img = openpyxl.drawing.image.Image(temp_image_path)

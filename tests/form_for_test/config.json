@@ -2,7 +2,7 @@
   "fields": [
     {
       "name": "Spali jste během Unihacku?",
-      "type": "BOXES",
+      "type": "SINGLE_CHOICE",
       "top_left": {
         "x": 306,
         "y": 1725
@@ -54,7 +54,7 @@
     },
     {
       "name": "Chcete přepis, nebo zmrzlinu?",
-      "type": "BOXES",
+      "type": "SINGLE_CHOICE",
       "top_left": {
         "x": 306,
         "y": 2285

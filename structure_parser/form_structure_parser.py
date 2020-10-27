@@ -1,11 +1,14 @@
+import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Dict, Union
+from typing import List, Optional, Dict
 
 import cv2
 import dacite
 import numpy as np
 from dacite import Config
+
+from field_recognizer.recognizing_dataclasses import RecognizingResult
 
 
 @dataclass
@@ -22,7 +25,7 @@ class Orientation(str, Enum):
 class FieldType(str, Enum):
     LETTERS = 'LETTERS'
     NUMBERS = 'NUMBERS'
-    BOXES = 'BOXES'
+    SINGLE_CHOICE = 'SINGLE_CHOICE'
 
 
 @dataclass
@@ -34,11 +37,9 @@ class Field:
     type: FieldType
     top_left: Point
     bottom_right: Point
-    recognized: Optional[List[Union[str, bool]]] = None
-    accuracy: Optional[List[float]] = None
-    answers: Optional[List[str]] = None
-    img: Optional[np.array] = None
-    box_data: Optional[List[np.ndarray]] = None
+    img: Optional[np.ndarray] = None
+    recognizing_results: Optional[RecognizingResult] = None
+    box_images: Optional[List[np.ndarray]] = None
 
 
 @dataclass
@@ -57,13 +58,14 @@ class FormStructureParser:
 
     def process_form(self, form_img) -> FormData:
         fields = []
+        form_structure = copy.deepcopy(self.form_structure)
 
-        for field in self.form_structure.fields:
+        for field in form_structure.fields:
             field_crops = self.process_field(field, form_img)
             fields.append(field_crops)
 
-        self.form_structure.fields = fields
-        return self.form_structure
+        form_structure.fields = fields
+        return form_structure
 
     def process_field(self, field_def: Field, form):
 
@@ -78,7 +80,7 @@ class FormStructureParser:
         else:
             box_data = self.process_horizontal_boxes(field_def)
 
-        field_def.box_data = box_data
+        field_def.box_images = box_data
         return field_def
 
     def process_horizontal_boxes(self, field_def: Field) -> List[np.ndarray]:
@@ -91,7 +93,7 @@ class FormStructureParser:
 
         for xx1, xx2 in zip(int_split[:-1], int_split[1:]):
             box_img = field_img[:, int(xx1) + int(space / 2): int(xx2 - space / 2)]
-            trimmed_box = self.trim_whitespace(box_img)
+            trimmed_box = self.trim_whitespace(box_img, field_def.type)
             box_data.append(trimmed_box)
         return box_data
 
@@ -105,12 +107,15 @@ class FormStructureParser:
         for yy1, yy2 in zip(int_split[:-1], int_split[1:]):
             box_img = field_img[int(yy1 - space / 2): int(yy2 - space / 2), :]
 
-            trimmed_box = self.trim_whitespace(box_img)
+            trimmed_box = self.trim_whitespace(box_img, field_def.type)
             box_data.append(trimmed_box)
 
         return box_data
 
-    def trim_whitespace(self, img: np.ndarray) -> np.ndarray:
+    @staticmethod
+    def trim_whitespace(img: np.ndarray, field_type: FieldType) -> np.ndarray:
+        if field_type is FieldType.SINGLE_CHOICE:
+            return img
 
         gray = 255 * (img < 128).astype(np.uint8)
         coords = cv2.findNonZero(gray)  # Find all non-zero points (text)
