@@ -4,7 +4,7 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-from config.configuration import ImageCv2, FormTemplates, ImageSiftResult, Template
+from config.configuration import ImageCv2, ImageSiftResult, Template
 from preprocessing.image_sift import get_image_sift_result
 from preprocessing.normalization import normalize
 
@@ -28,13 +28,13 @@ def get_good_matches_for_template(image_sift: ImageSiftResult, template_sift: Im
 
 
 def find_best_template_match(image_sift: ImageSiftResult,
-                             templates: FormTemplates) -> Tuple[List[cv2.DMatch], Template, int]:
+                             templates: List[Template]) -> Tuple[List[cv2.DMatch], Template, int]:
     all_good_matches = [(get_good_matches_for_template(image_sift, template.sift), template, i)
-                        for i, template in enumerate(templates.templates)]
+                        for i, template in enumerate(templates)]
     return max(all_good_matches, key=lambda good_matches_template: len(good_matches_template[0]))
 
 
-def fit_image_to_templates(image: ImageCv2, templates: FormTemplates) -> Tuple[ImageCv2, int]:
+def fit_image_to_templates(image: ImageCv2, templates: List[Template]) -> Tuple[ImageCv2, int]:
     image_sift = get_image_sift_result(image)
     good_matches, template, template_index = find_best_template_match(image_sift, templates)
 
@@ -52,7 +52,7 @@ def fit_image_to_templates(image: ImageCv2, templates: FormTemplates) -> Tuple[I
         raise AssertionError("Cant find enough keypoints.")
 
 
-def preprocess(im, form_templates: FormTemplates) -> np.ndarray:
+def preprocess(im: np.ndarray, form_templates: List[Template]) -> np.ndarray:
     """Runs the full pipeline:
 
     - Loads input image

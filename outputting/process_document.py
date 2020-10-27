@@ -1,6 +1,6 @@
 import json
+from typing import List
 
-import cv2
 import dacite
 
 from config.configuration import PathConfig, Models
@@ -9,6 +9,7 @@ from field_recognizer.recognize_all import recognize
 from preprocessing.preprocess import preprocess
 from preprocessing.templating import get_templates
 from structure_parser.form_structure_parser import FormStructureParser, FormData
+from utils.image_loading import load_images_from_path
 
 
 def load_path_configuration(path_configuration) -> PathConfig:
@@ -41,16 +42,19 @@ def load_models(model_data_location: str):
                   number_mapper=number_mapper)
 
 
-def process_document(path_to_path_config: str, document_path: str) -> FormData:
+def process_document(path_to_path_config: str, document_path: str) -> List[FormData]:
     path_config = load_path_configuration(path_to_path_config)
     with open(path_config.form_structure_config_path, 'r') as f:
         form_structure_parser = FormStructureParser(json.load(f))
     models = load_models(path_config.model_data_location)
     templates = get_templates(path_config.template_image_path)
 
-    image = cv2.imread(document_path)
-    image = preprocess(image, templates)
-    form_data = form_structure_parser.process_form(image)
-    form_data = recognize(form_data, models)
+    images = load_images_from_path(document_path)
+    form_datas = []
+    for image, template in zip(images, templates):
+        image = preprocess(image, [template])
+        form_data = form_structure_parser.process_form(image)
+        form_data = recognize(form_data, models)
+        form_datas.append(form_data)
 
-    return form_data
+    return form_datas
