@@ -57,6 +57,9 @@ tests/form_for_test/config.json
 
 ## Road map
 
+priorities till 15.11.2020 
+
+
 #### Character Recognition
  * [x] retrain model on capital letters only
  * [x] enrich emnist dataset by different letter positioning
@@ -68,7 +71,9 @@ tests/form_for_test/config.json
    * Add second clasifier, that would recognize diacritics  / accute(') / carron(ˇ) / none  / 
    * Create our own, small dataset (maybe adding the diacritics to current dataset)
     and use methods here: https://arxiv.org/pdf/1904.08095.pdf
-   
+ * [ ] Create a model distinguishing X or filled circle or nothing or anomaly.
+  Improve true/false computation for boxes
+
 #### Refactoring
  * [x] Restructure repository to separate code from data
  * [ ] Refactor to original emnist dataset structure instead of preparsed csv data from kaggle
@@ -77,15 +82,12 @@ tests/form_for_test/config.json
  * [x] smarter thresholding
  * [x] smarter corner classification
  * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
- * [ ] Improve justy config so it centers boxes better and reponse 159 in PID1 is correctly parsed
+ * [x] Improve just config so it centers boxes better and reponse 159 in PID1 is correctly parsed
+ * [ ] ==Change code to handle multiple pages somehow==
+ - config for all the pages at once? Config also specified which template page to consider (possibly a list)?
  * [ ] Better noise cancellation on the whole file
  * [ ] Better noise cancellation on the level of the cropped boxes (important to do before cropping to the symbol area as it is broken by noise at the moment sometimes)
   many options how to approach, choose any
- * [ ] Implement logic around single choice forms return only single choice if there is only 1 true choice found,
-  otherwise -1 (if no question answered) or -2 (if more than one question answered).
- * [ ] Add to single choice logic also logic for filled in and anomaly circles. 
- * [ ] Create a model distinguishing X or filled circle or nothing or anomaly.
- Improve true/false computation for boxes
  * [ ] Possibly (but maybe hard to do): remove bounding lines from figures.
  * [ ] Speedup: the current matching teplate logic is simly tooo slow. Think what to do
  - use other feature extraction method than SIFT (I have tried ORB which did not work well enough, but maybe after some tuning it would. it is way faster)
@@ -93,16 +95,26 @@ tests/form_for_test/config.json
  * [ ] Saving of templates -> pickle is not working, but can be made working by 
  https://stackoverflow.com/questions/10045363/pickling-cv2-keypoint-causes-picklingerror
 
+#### Model results processing
+
+ * [ ] Implement logic around single choice forms return only single choice if there is only 1 true choice found,
+  otherwise -1 (if no question answered) or -2 (if more than one question answered).
+ * [ ] Add to single choice logic also logic for filled in and anomaly circles. 
+
+
+#### Specific Questionnaire processing
+ * [ ] Prepare empty template that will have only header and some repeating thigs for PID, test how it works, potentially alter
+ PID a bit, so it works for such empty template
+* [ ] Prepare at the top of first page space where one can fill in the patient code and add this to config as only number field
  
 #### Configuration
  * [x] location of text via top left corner, bottom right corner plus number of letters
- * [ ] create a tool for config file creation
+ * [ ] Create a tool for config file creation
     
 #### Packaging, proper output
 * [x] prepare for pdf with multiple questionnaires
 * [x] create config for the current questionnaire we are working on
-* [x] add "made mistake" functionality (whole box filled in probably?)
-* [ ] Pre
+* [ ] For the name of the patient use the name from questionnaire of question called patient_id. In case such question is not present, use the name of the pdf (as it is done now)
 * [ ] Prepare python script that will process the scanned pdfs:
 
 The program should get the following parameters:
@@ -113,10 +125,13 @@ The program should get the following parameters:
 
 And it should output:
 
-    - excel file and csv file (or make it a parameter) with the answers and their accuracies and also the 
-    parts of the original scan that were used for the recognition. 
+    - excel file with the answers and their accuracies and also the parts of the original scan that were used for the recognition. 
     
-* [ ] Prepare python script that will process the excel document with all the answers into one summary document. One
-questionnaire per line. 
+* [ ] Prepare python script that will process the excel document with all the answers into an excel sheet. One questionnaire per line. 
+params:
+    - path to the excel with answers
+    - path to the excel to put it in (if none, create new)
+    - name of the sheet (if none create new)
+if the sheet is non empty put the data below the data already there 
 
 * [ ] Write a nice readme ale let someone test on mac
