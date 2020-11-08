@@ -71,7 +71,7 @@ priorities till 15.11.2020
    * Add second clasifier, that would recognize diacritics  / accute(') / carron(ˇ) / none  / 
    * Create our own, small dataset (maybe adding the diacritics to current dataset)
     and use methods here: https://arxiv.org/pdf/1904.08095.pdf
- * [ ] Create a model distinguishing X or filled circle or nothing or anomaly.
+ * [ ] (depends on something in section Model results processing) Create a model distinguishing X or filled circle or nothing or anomaly.
   Improve true/false computation for boxes
 
 #### Refactoring
@@ -85,6 +85,7 @@ priorities till 15.11.2020
  * [x] Improve just config so it centers boxes better and reponse 159 in PID1 is correctly parsed
  * [ ] ***Change code to handle multiple pages somehow***
  - config for all the pages at once? Config also specified which template page to consider (possibly a list)?
+ - prepare the config for PID in this format
  * [ ] Better noise cancellation on the whole file
  * [ ] Better noise cancellation on the level of the cropped boxes (important to do before cropping to the symbol area as it is broken by noise at the moment sometimes)
   many options how to approach, choose any
@@ -97,15 +98,14 @@ priorities till 15.11.2020
 
 #### Model results processing
 
- * [ ] Implement logic around single choice forms return only single choice if there is only 1 true choice found,
-  otherwise -1 (if no question answered) or -2 (if more than one question answered).
+ * [ ] ***Implement logic around single choice forms return only single choice if there is only 1 true choice found, otherwise -1 (if no question answered) or -2 (if more than one question answered).***
  * [ ] Add to single choice logic also logic for filled in and anomaly circles. 
 
 
 #### Specific Questionnaire processing
  * [ ] Prepare empty template that will have only header and some repeating thigs for PID, test how it works, potentially alter
  PID a bit, so it works for such empty template
-* [ ] Prepare at the top of first page space where one can fill in the patient code and add this to config as only number field
+* [ ] ***Prepare at the top of the first page space where one can fill in the patient code and add this to config as only number field***
  
 #### Configuration
  * [x] location of text via top left corner, bottom right corner plus number of letters
@@ -114,10 +114,10 @@ priorities till 15.11.2020
 #### Packaging, proper output
 * [x] prepare for pdf with multiple questionnaires
 * [x] create config for the current questionnaire we are working on
-* [ ] For the name of the patient use the name from questionnaire of question called patient_id. In case such question is not present, use the name of the pdf (as it is done now)
-* [ ] Prepare python script that will process the scanned pdfs:
+* [ ] ***For the name of the patient use the name from questionnaire of question called patient_id. In case such question is not present, use the name of the pdf (as it is done now)***
+* [ ] ***Prepare python script that will process the scanned pdfs:***
 
-The program should get the following parameters:
+The program should get the following parameters from config file that will have to be existing in the folder:
 
     - folder with scanned files (how should be new questionnaire recongized? new file for each?
     - path to template document as pdf or jpg or something
@@ -127,11 +127,11 @@ And it should output:
 
     - excel file with the answers and their accuracies and also the parts of the original scan that were used for the recognition. 
     
-* [ ] Prepare python script that will process the excel document with all the answers into an excel sheet. One questionnaire per line. 
+* [ ] ***Prepare python script that will process the excel document with all the answers into an excel sheet. One questionnaire per line.*** 
 params:
     - path to the excel with answers
     - path to the excel to put it in (if none, create new)
     - name of the sheet (if none create new)
 if the sheet is non empty put the data below the data already there 
 
-* [ ] Write a nice readme ale let someone test on mac
+* [ ] ***Write a nice readme ale let someone test on mac***
