@@ -28,6 +28,7 @@ class FieldType(str, Enum):
     SINGLE_CHOICE = 'SINGLE_CHOICE'
 
 
+
 @dataclass
 class Field:
     orientation: Orientation

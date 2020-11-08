@@ -61,7 +61,6 @@ tests/form_for_test/config.json
  * [x] retrain model on capital letters only
  * [x] enrich emnist dataset by different letter positioning
  * [x] use this notebook to improve the model https://www.kaggle.com/tarunkr/digit-recognition-tutorial-cnn-99-67-accuracy
- * [ ] enrich emnist dataset by different letter thickness
  * [x] Add model for numbers
  * [ ] Solve czech characters, either
    * find different dataset with czech diacritics
@@ -71,30 +70,40 @@ tests/form_for_test/config.json
     and use methods here: https://arxiv.org/pdf/1904.08095.pdf
    
 #### Refactoring
- * [ ] Restructure repository to separate code from data
- * [ ] consider refactoring to original emnist dataset structure instead of this csv data
+ * [x] Restructure repository to separate code from data
+ * [ ] Refactor to original emnist dataset structure instead of preparsed csv data from kaggle
 
 #### Preprocessing
  * [x] smarter thresholding
  * [x] smarter corner classification
  * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
- * [ ] better drop noise when cutting to the information area -> at the moment the cropping does not work well 
- (connected with the point below)
- * [ ] improve true/false computation for boxes, improve accuracy computation there -> use more the template
- * [ ] speedup: at the moment as we are always matching to the whole template set, it is really slow
- * [ ] saving of templates -> pickle is not working, but can be made working by 
+ * [ ] Improve justy config so it centers boxes better and reponse 159 in PID1 is correctly parsed
+ * [ ] Better noise cancellation on the whole file
+ * [ ] Better noise cancellation on the level of the cropped boxes (important to do before cropping to the symbol area as it is broken by noise at the moment sometimes)
+  many options how to approach, choose any
+ * [ ] Implement logic around single choice forms return only single choice if there is only 1 true choice found,
+  otherwise -1 (if no question answered) or -2 (if more than one question answered).
+ * [ ] Add to single choice logic also logic for filled in and anomaly circles. 
+ * [ ] Create a model distinguishing X or filled circle or nothing or anomaly.
+ Improve true/false computation for boxes
+ * [ ] Possibly (but maybe hard to do): remove bounding lines from figures.
+ * [ ] Speedup: the current matching teplate logic is simly tooo slow. Think what to do
+ - use other feature extraction method than SIFT (I have tried ORB which did not work well enough, but maybe after some tuning it would. it is way faster)
+ - do whathever else
+ * [ ] Saving of templates -> pickle is not working, but can be made working by 
  https://stackoverflow.com/questions/10045363/pickling-cv2-keypoint-causes-picklingerror
 
  
 #### Configuration
  * [x] location of text via top left corner, bottom right corner plus number of letters
  * [ ] create a tool for config file creation
- 
+    
 #### Packaging, proper output
-* [ ] prepare for pdf with multiple questionnaires
+* [x] prepare for pdf with multiple questionnaires
 * [x] create config for the current questionnaire we are working on
-* [ ] add "made mistake" functionality (whole box filled in probably?)
-* [ ] package it:
+* [x] add "made mistake" functionality (whole box filled in probably?)
+* [ ] Pre
+* [ ] Prepare python script that will process the scanned pdfs:
 
 The program should get the following parameters:
 
@@ -104,5 +113,10 @@ The program should get the following parameters:
 
 And it should output:
 
-    - excel file and csv file (or make it a parameter) with the answers and their accuracies and somehow also the 
-    parts of the original scan that were used for the recognition. Maybe in separate folder, properly named.
+    - excel file and csv file (or make it a parameter) with the answers and their accuracies and also the 
+    parts of the original scan that were used for the recognition. 
+    
+* [ ] Prepare python script that will process the excel document with all the answers into one summary document. One
+questionnaire per line. 
+
+* [ ] Write a nice readme ale let someone test on mac
