@@ -29,14 +29,11 @@ def recognize_single_choice_one_box(img: np.ndarray, single_choice_stats: Single
 
     else:
         is_full = False
-        print(r)
         dist = single_choice_stats.split_between - single_choice_stats.mean_empty
         accuracy = np.clip(((single_choice_stats.split_between - r) - (r - single_choice_stats.mean_empty)) / dist,
                            a_min=0,
                            a_max=1
                            )
-    if accuracy < 0.1:
-        print(f"ratio {r}, {single_choice_stats.split_between}, {single_choice_stats.mean_empty}, {single_choice_stats.mean_full}")
     return RecognizingBoxResult(is_full, accuracy, img)
 
 

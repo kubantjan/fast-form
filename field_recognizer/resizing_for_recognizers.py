@@ -1,10 +1,14 @@
-import cv2
 import math
 
+import cv2
+import numpy as np
 
-def resize(img, full_dimension, border):
+
+def resize(img: np.ndarray, full_dimension: int, border: int):
     w, h = img.shape
     maxi = max([w, h])
+    if maxi == 0:
+        return np.array([])
 
     dimension = full_dimension - (border * 2)
     r = dimension / maxi

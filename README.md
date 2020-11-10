@@ -103,7 +103,7 @@ priorities till 15.11.2020
 #### Specific Questionnaire processing
  * [ ] Prepare empty template that will have only header and some repeating thigs for PID, test how it works, potentially alter
  PID a bit, so it works for such empty template
-* [ ] ***Prepare at the top of the first page space where one can fill in the patient code and add this to config as only number field***
+* [x] ***Prepare at the top of the first page space where one can fill in the patient code and add this to config as only number field***
  
 #### Configuration
  * [x] location of text via top left corner, bottom right corner plus number of letters
