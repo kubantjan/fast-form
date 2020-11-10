@@ -1,72 +1,30 @@
 import copy
 from dataclasses import dataclass
-from enum import Enum
-from typing import List, Optional, Dict
+from typing import List
 
 import cv2
-import dacite
 import numpy as np
-from dacite import Config
 
-from field_recognizer.recognizing_dataclasses import RecognizingResult
-
-
-@dataclass
-class Point:
-    x: int
-    y: int
-
-
-class Orientation(str, Enum):
-    HORIZONTAL = 'HORIZONTAL'
-    VERTICAL = 'VERTICAL'
-
-
-class FieldType(str, Enum):
-    LETTERS = 'LETTERS'
-    NUMBERS = 'NUMBERS'
-    SINGLE_CHOICE = 'SINGLE_CHOICE'
-
+from structure_parser.form_structure_dataclasses import FormPageData, FieldType, Orientation, Field
 
 
 @dataclass
-class Field:
-    orientation: Orientation
-    space_between_boxes: int
-    number_of_boxes: int
-    name: str
-    type: FieldType
-    top_left: Point
-    bottom_right: Point
-    img: Optional[np.ndarray] = None
-    recognizing_results: Optional[RecognizingResult] = None
-    box_images: Optional[List[np.ndarray]] = None
-
-
-@dataclass
-class FormData:
-    fields: List[Field]
-
-
-class FormStructureParser:
+class PageStructureParser:
     """
     Gets imdata in cv2 image
     """
+    page_structure: FormPageData
 
-    def __init__(self, config: Dict):
-        self.form_structure = dacite.from_dict(data_class=FormData, data=config,
-                                               config=Config(cast=[FieldType, Orientation]))
-
-    def process_form(self, form_img) -> FormData:
+    def process_page(self, form_img) -> FormPageData:
         fields = []
-        form_structure = copy.deepcopy(self.form_structure)
+        page_structure = copy.deepcopy(self.page_structure)
 
-        for field in form_structure.fields:
+        for field in page_structure.fields:
             field_crops = self.process_field(field, form_img)
             fields.append(field_crops)
 
-        form_structure.fields = fields
-        return form_structure
+        page_structure.fields = fields
+        return page_structure
 
     def process_field(self, field_def: Field, form):
 

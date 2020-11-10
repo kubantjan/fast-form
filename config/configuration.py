@@ -25,11 +25,6 @@ class FormTemplates:
 
 
 @dataclass
-class Configuration:
-    template: Template
-
-
-@dataclass
 class PathConfig:
     template_image_path: str
     form_structure_config_path: str

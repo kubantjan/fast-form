@@ -1,10 +1,10 @@
 from config.configuration import Models
 from field_recognizer.recognize_boxes import calculate_box_stats, recognize_single_choice
 from field_recognizer.recognize_letters import recognize_chars
-from structure_parser.form_structure_parser import FormData, FieldType
+from structure_parser.form_structure_dataclasses import FormPageData, FieldType
 
 
-def recognize(form_data: FormData, models: Models) -> FormData:
+def recognize(form_data: FormPageData, models: Models) -> FormPageData:
     box_stats = calculate_box_stats(form_data.fields)
     fields = []
     for field in form_data.fields:

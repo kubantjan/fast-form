@@ -4,7 +4,7 @@ from pylab import *
 from scipy.stats import norm
 
 from field_recognizer.recognizing_dataclasses import RecognizingBoxResult, SingleChoiceStats, RecognizingResult
-from structure_parser.form_structure_parser import FieldType, Field
+from structure_parser.form_structure_dataclasses import Field, FieldType
 
 logger = logging.getLogger(__name__)
 

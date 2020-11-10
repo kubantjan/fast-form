@@ -8,15 +8,15 @@ import pandas as pd
 from cv2 import cv2
 from openpyxl import load_workbook
 
-from structure_parser.form_structure_parser import FormData
+from structure_parser.form_structure_dataclasses import FormData
 
 
-def output_data(form_datas: List[FormData]) -> Tuple[pd.DataFrame, List[np.ndarray]]:
+def output_data(form_data: FormData) -> Tuple[pd.DataFrame, List[np.ndarray]]:
     form_dict = dict()
     form_images = []
     question_number = 0
-    for form_data in form_datas:
-        for field in form_data.fields:
+    for page_data in form_data.form_page_data.values():
+        for field in page_data.fields:
             field_dict = dict()
 
             field_dict['name'] = field.name
@@ -33,7 +33,7 @@ def output_data(form_datas: List[FormData]) -> Tuple[pd.DataFrame, List[np.ndarr
 def save_data(df: pd.DataFrame, images: List[np.ndarray], document_path: str):
     with tempfile.TemporaryDirectory() as temp_image_folder:
         filename = f"{document_path.split('.')[0]}.xlsx"
-        df.to_excel(filename)
+        df.to_excel(filename, index=False)
 
         wb = load_workbook(filename=filename)
         ws = wb.worksheets[0]

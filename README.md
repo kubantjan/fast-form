@@ -83,9 +83,7 @@ priorities till 15.11.2020
  * [x] smarter corner classification
  * [x] completely drop corners, orient page based on the original file provided (fitting text on text)
  * [x] Improve just config so it centers boxes better and reponse 159 in PID1 is correctly parsed
- * [ ] ***Change code to handle multiple pages somehow***
- - config for all the pages at once? Config also specified which template page to consider (possibly a list)?
- - prepare the config for PID in this format
+ * [x] ***Change code to handle multiple pages somehow***
  * [ ] Better noise cancellation on the whole file
  * [ ] Better noise cancellation on the level of the cropped boxes (important to do before cropping to the symbol area as it is broken by noise at the moment sometimes)
   many options how to approach, choose any
