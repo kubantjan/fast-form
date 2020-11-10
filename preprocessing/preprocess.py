@@ -4,7 +4,7 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-from config.configuration import ImageCv2, ImageSiftResult, Template
+from config.configuration_dataclasses import ImageCv2, ImageSiftResult, Template
 from preprocessing.image_sift import get_image_sift_result
 from preprocessing.normalization import normalize
 

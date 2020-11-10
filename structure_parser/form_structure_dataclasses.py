@@ -44,6 +44,6 @@ class FormPageData:
 
 
 @dataclass
-class FormData:
+class FormStructure:
     form_page_data: Dict[str, FormPageData]
     page_count: int

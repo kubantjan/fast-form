@@ -1,4 +1,4 @@
-from config.configuration import Models
+from config.configuration_dataclasses import Models
 from field_recognizer.recognize_boxes import calculate_box_stats, recognize_single_choice
 from field_recognizer.recognize_letters import recognize_chars
 from structure_parser.form_structure_dataclasses import FormPageData, FieldType

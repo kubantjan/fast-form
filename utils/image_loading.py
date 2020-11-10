@@ -5,7 +5,7 @@ from PIL.PpmImagePlugin import PpmImageFile
 from cv2 import cv2
 from pdf2image import convert_from_path
 
-from config.configuration import ImageCv2
+from config.configuration_dataclasses import ImageCv2
 
 
 def to_cv_image(pid_image: PpmImageFile) -> ImageCv2:

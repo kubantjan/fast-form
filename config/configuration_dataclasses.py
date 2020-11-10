@@ -4,6 +4,8 @@ from typing import List, Any, Dict
 import cv2
 import numpy as np
 
+from structure_parser.form_structure_dataclasses import FormStructure
+
 ImageCv2 = np.ndarray
 
 
@@ -25,15 +27,24 @@ class FormTemplates:
 
 
 @dataclass
-class PathConfig:
-    template_image_path: str
-    form_structure_config_path: str
-    model_data_location: str = "./model_data"
-
-
-@dataclass
 class Models:
     model_letters: Any
     model_numbers: Any
     letter_mapper: Dict
     number_mapper: Dict
+
+
+@dataclass
+class ProcessingConfig:
+    models: Models
+    templates: List[Template]
+    form_structure: FormStructure
+    folder_with_documents_path: str
+
+
+@dataclass
+class PathsForProcessingConfig:
+    template_image_path: str
+    form_structure_config_path: str
+    folder_with_documents_path: str
+    model_data_location: str = "./model_data"

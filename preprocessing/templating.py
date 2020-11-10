@@ -1,6 +1,6 @@
 from typing import List
 
-from config.configuration import ImageCv2, Template
+from config.configuration_dataclasses import Template, ImageCv2
 from preprocessing.image_sift import get_image_sift_result
 from preprocessing.normalization import normalize
 from utils.image_loading import load_images_from_path

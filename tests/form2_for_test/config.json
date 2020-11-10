@@ -1,0 +1,387 @@
+{
+  "form_page_data": {
+    "0": {
+      "fields": [
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "1",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 673
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 763
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "2",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 801
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 891
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "3",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 929
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1019
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "4",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1057
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1147
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "5",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1185
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1275
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "6",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1313
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1403
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "7",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1441
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1531
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "8",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1569
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1659
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "9",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1697
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1787
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "10",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1825
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 1915
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "11",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 1953
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2043
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "12",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2081
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2171
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "13",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2209
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2299
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "14",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2337
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2427
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "15",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2465
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2555
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "16",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2593
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2683
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "17",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2721
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2811
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "18",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2849
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 2939
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "19",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 2977
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 3067
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 80,
+          "number_of_boxes": 4,
+          "name": "20",
+          "type": "SINGLE_CHOICE",
+          "top_left": {
+            "x": 1287,
+            "y": 3105
+          },
+          "bottom_right": {
+            "x": 2242,
+            "y": 3195
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        },
+        {
+          "orientation": "HORIZONTAL",
+          "space_between_boxes": 12,
+          "number_of_boxes": 5,
+          "name": "patient_id",
+          "type": "NUMBERS",
+          "top_left": {
+            "x": 462,
+            "y": 500
+          },
+          "bottom_right": {
+            "x": 1155,
+            "y": 620
+          },
+          "img": null,
+          "recognizing_results": null,
+          "box_images": null
+        }
+      ]
+    }
+  },
+  "page_count": 1
+}

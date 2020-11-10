@@ -112,8 +112,8 @@ priorities till 15.11.2020
 #### Packaging, proper output
 * [x] prepare for pdf with multiple questionnaires
 * [x] create config for the current questionnaire we are working on
-* [ ] ***For the name of the patient use the name from questionnaire of question called patient_id. In case such question is not present, use the name of the pdf (as it is done now)***
-* [ ] ***Prepare python script that will process the scanned pdfs:***
+* [x] ***For the name of the patient use the name from questionnaire of question called patient_id. In case such question is not present, use the name of the pdf (as it is done now)***
+* [x] ***Prepare python script that will process the scanned pdfs:***
 
 The program should get the following parameters from config file that will have to be existing in the folder:
 
@@ -132,4 +132,5 @@ params:
     - name of the sheet (if none create new)
 if the sheet is non empty put the data below the data already there 
 
-* [ ] ***Write a nice readme ale let someone test on mac***
+* [ ] ***Write a nice readme and package it***
+* [ ] ***Test and especially let someone test on mac***
