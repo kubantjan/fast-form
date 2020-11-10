@@ -13,15 +13,13 @@ class RecognizingBoxResult:
 
 @dataclass
 class RecognizingResult:
-    recognized: Union[str, bool]
+    recognized: Union[int, bool]
     recognizing_box_results: List[RecognizingBoxResult]
     accuracy: float
 
 
 @dataclass
 class SingleChoiceStats:
-    mu: float
+    split_between: float
     mean_empty: float
-    var_empty: float
     mean_full: float
-    var_full: float

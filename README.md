@@ -96,7 +96,7 @@ priorities till 15.11.2020
 
 #### Model results processing
 
- * [ ] ***Implement logic around single choice forms return only single choice if there is only 1 true choice found, otherwise -1 (if no question answered) or -2 (if more than one question answered).***
+ * [x] ***Implement logic around single choice forms return only single choice if there is only 1 true choice found, otherwise -1 (if no question answered) or -2 (if more than one question answered).***
  * [ ] Add to single choice logic also logic for filled in and anomaly circles. 
 
 

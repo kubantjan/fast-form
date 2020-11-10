@@ -50,16 +50,19 @@ def load_models(model_data_location: str):
                   number_mapper=number_mapper)
 
 
+def load_form_structure(form_structure_config_path: str) -> FormData:
+    with open(form_structure_config_path, 'r') as f:
+        return dacite.from_dict(data_class=FormData, data=json.load(f),
+                                config=Config(cast=[FieldType, Orientation]))
+
+
 def process_document(path_to_path_config: str, document_path: str) -> FormData:
     path_config = load_path_configuration(path_to_path_config)
-
-    with open(path_config.form_structure_config_path, 'r') as f:
-        form_structure = dacite.from_dict(data_class=FormData, data=json.load(f),
-                                          config=Config(cast=[FieldType, Orientation]))
 
     models = load_models(path_config.model_data_location)
     templates = get_templates(path_config.template_image_path)
     images = load_images_from_path(document_path)
+    form_structure = load_form_structure(path_config.form_structure_config_path)
 
     assert len(templates) == form_structure.page_count
     assert len(images) == form_structure.page_count
