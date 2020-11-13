@@ -8,7 +8,7 @@ from config.configuration_dataclasses import PathsForProcessingConfig
 from config.configuration_loading import get_processing_config
 from outputting.process_document import process_document_to_excel
 
-PATH_TO_PATH_CONFIG = "../scany/path_config.json"
+PATH_TO_PATH_CONFIG = "./path_config.json"
 VALIDATION_EXCEL_NAME = "validation_excel.xlsx"
 
 logging.basicConfig(

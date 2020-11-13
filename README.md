@@ -1,19 +1,48 @@
 # fast-form
-project from UniHack hackathon, helps to extract data from forms
+project from UniHack hackathon, helps to extract data from forms. 
 
-## Setting up
-create conda environment with python 3.7.9 and poppler:
+
+## Installation
+
+To use first install anaconda on your computer https://www.anaconda.com/
+
+Then create conda environment with python 3.7.9 and poppler:
 ```
 conda env create -f conda.yml -y
 conda activate fast-form
+pip install requirements.txt
 ```
 
-Then set it up
+## Run
 
-```
+First create some folder and put there the pdfs you want to process. Then fill in the path_config.json file
+you have to have your template_file, configuration file, the folder where you have your scanned pdfs and finally
+path to excel you want to create the result sheet in (in case it does not exist it will be created)
+
+Fist run
+```bash
+python process_to_validation_excel.py
+``` 
+it should create an excel in the data folder with the processed answers. Go through. The answers that seemed suspicious
+have pictures there to show you the answers. You can correct those. We use -1 for answers that had multiple crossed 
+fields (or we think so) and -2 in case no field was crossed.
+
+When you are satisfied, save the excel and run
+
+```bash
+python process_to_final_excel.py
+``` 
+which will create a sheet in the provided excel with the results
+
+
+
+## Development
+
+Before development please run
+`
 make setup
-```
-### Installing new dependencies added on remote
+`
+Installing new dependencies added on remote
 
 ```
 pip-sync
@@ -26,12 +55,7 @@ add line to `requirements.in` and then run
 pip-compile
 ```
 
-## Run
-```bash
-python3 main.py -c config/config.json
-``` 
-
-## Retrain model
+### Retrain model
 We are using preparsed emnist dataset.
 https://www.kaggle.com/crawford/emnist
 
@@ -132,5 +156,7 @@ params:
     - name of the sheet (if none create new)
 if the sheet is non empty put the data below the data already there 
 
-* [ ] ***Write a nice readme and package it***
+* [x] ***Write readme***
+* [ ] ***Write nicer readme***
+* [ ] ***Create from this a package on pypi***
 * [ ] ***Test and especially let someone test on mac***
