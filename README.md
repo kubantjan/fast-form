@@ -125,7 +125,7 @@ And it should output:
 
     - excel file with the answers and their accuracies and also the parts of the original scan that were used for the recognition. 
     
-* [ ] ***Prepare python script that will process the excel document with all the answers into an excel sheet. One questionnaire per line.*** 
+* [x] ***Prepare python script that will process the excel document with all the answers into an excel sheet. One questionnaire per line.*** 
 params:
     - path to the excel with answers
     - path to the excel to put it in (if none, create new)

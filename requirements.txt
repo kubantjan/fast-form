@@ -120,6 +120,7 @@ werkzeug==1.0.1           # via tensorboard
 wheel==0.34.2             # via tensorboard, tensorflow
 widgetsnbextension==3.5.1  # via ipywidgets
 wrapt==1.12.1             # via tensorflow
+xlrd==1.2.0               # via -r requirements.in
 zipp==3.1.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:

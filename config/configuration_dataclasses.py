@@ -39,7 +39,6 @@ class ProcessingConfig:
     models: Models
     templates: List[Template]
     form_structure: FormStructure
-    folder_with_documents_path: str
 
 
 @dataclass
@@ -48,3 +47,4 @@ class PathsForProcessingConfig:
     form_structure_config_path: str
     folder_with_documents_path: str
     model_data_location: str = "./model_data"
+    final_excel_path: str = "./result.xlsx"
