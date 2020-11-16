@@ -1,0 +1,5 @@
+{
+    "template_path": "template.jpg",
+    "form_structure_path": "config.json",
+    "folder_with_documents_path": "documents"
+}

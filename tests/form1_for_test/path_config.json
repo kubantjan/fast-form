@@ -1,5 +1,0 @@
-{
-    "template_path": "tests/form1_for_test/template.jpg",
-    "form_structure_path": "tests/form1_for_test/config.json",
-    "folder_with_documents_path": "tests/form1_for_test/documents"
-}

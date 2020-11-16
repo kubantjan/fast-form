@@ -1,6 +1,6 @@
 from typing import List
 
-from structure_parser.form_structure_dataclasses import Field, Orientation, FieldType, Point
+from fast_form.structure_parser.form_structure_dataclasses import Field, Orientation, FieldType, Point
 
 
 def get_fields_for_page(
