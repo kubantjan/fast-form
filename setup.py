@@ -13,9 +13,9 @@ from os import path
 # Always prefer setuptools over distutils
 from setuptools import find_packages, setup
 
-here = path.abspath(path.dirname(__file__))
+from fast_form.version import VERSION
 
-VERSION = '0.1.2'
+here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md')) as f:
@@ -90,6 +90,7 @@ setup(
         'openpyxl>=3.0.5',
         'pdf2image>=1.14.0',
         'xlrd>=1.2.0',
+        'h5py < 3.0.0'
     ],
 
     # List additional groups of dependencies here (e.g. development

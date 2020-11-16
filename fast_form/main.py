@@ -4,6 +4,7 @@ import os
 
 from fast_form.outputting.utils_for_main import load_paths_for_processing_config, process_to_validation_excel, \
     process_to_final_excel
+from fast_form.version import VERSION
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -18,7 +19,7 @@ def get_parser():
     Creates a new argument parser.
     """
     par = argparse.ArgumentParser('fast-form')
-    version = '%(prog)s ' + "0.1.0"
+    version = '%(prog)s ' + VERSION
     par.add_argument('--version', '-v', action='version', version=version)
     par.add_argument('--path_to_path_config',
                      type=str,

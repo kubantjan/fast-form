@@ -2,3 +2,9 @@
 setup:
 	pip install pip-tools
 	pip-sync
+
+
+upload_to_pypi:
+	pip install twine
+	python setup.py sdist
+	twine upload dist/*
