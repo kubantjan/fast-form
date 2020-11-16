@@ -43,8 +43,8 @@ class ProcessingConfig:
 
 @dataclass
 class PathsForProcessingConfig:
-    template_image_path: str
-    form_structure_config_path: str
+    template_path: str
+    form_structure_path: str
     folder_with_documents_path: str
     model_data_location: str = "./model_data"
     final_excel_path: str = "./result.xlsx"

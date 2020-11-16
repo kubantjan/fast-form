@@ -5,123 +5,55 @@
 #    pip-compile requirements.in
 #
 absl-py==0.9.0            # via tensorboard, tensorflow
-appdirs==1.4.4            # via virtualenv
-argon2-cffi==20.1.0       # via notebook
-asgiref==3.2.7            # via django
 astor==0.8.1              # via tensorflow
-async-generator==1.10     # via nbclient
-attrs==20.2.0             # via jsonschema
 autopep8==1.5.4           # via -r requirements.in
-backcall==0.2.0           # via ipython
-bleach==3.2.0             # via nbconvert
 cachetools==4.1.0         # via google-auth
-certifi==2020.6.20        # via matplotlib, requests
-cffi==1.14.2              # via argon2-cffi
-cfgv==3.2.0               # via pre-commit
+certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
-cycler==0.10.0            # via matplotlib
 dacite==1.5.1             # via -r requirements.in
-decorator==4.4.2          # via ipython
-defusedxml==0.6.0         # via nbconvert
-distlib==0.3.1            # via virtualenv
-django==3.0.5             # via image
-entrypoints==0.3          # via nbconvert
 et-xmlfile==1.0.1         # via openpyxl
-filelock==3.0.12          # via virtualenv
 gast==0.2.2               # via tensorflow
 google-auth-oauthlib==0.4.1  # via tensorboard
 google-auth==1.14.1       # via google-auth-oauthlib, tensorboard
 google-pasta==0.2.0       # via tensorflow
 grpcio==1.28.1            # via tensorboard, tensorflow
 h5py==2.10.0              # via keras, keras-applications
-identify==1.5.3           # via pre-commit
 idna==2.9                 # via requests
-image==1.5.31             # via -r requirements.in
-importlib-metadata==1.7.0  # via jsonschema, pre-commit, virtualenv
-ipykernel==5.3.4          # via -r requirements.in, ipywidgets, jupyter, jupyter-console, notebook, qtconsole
-ipython-genutils==0.2.0   # via nbformat, notebook, qtconsole, traitlets
-ipython==7.18.1           # via ipykernel, ipywidgets, jupyter-console
-ipywidgets==7.5.1         # via jupyter
 jdcal==1.4.1              # via openpyxl
-jedi==0.17.2              # via ipython
-jinja2==2.11.2            # via nbconvert, notebook
-jsonschema==3.2.0         # via nbformat
-jupyter-client==6.1.7     # via ipykernel, jupyter-console, nbclient, notebook, qtconsole
-jupyter-console==6.2.0    # via jupyter
-jupyter-core==4.6.3       # via jupyter-client, nbconvert, nbformat, notebook, qtconsole
-jupyter==1.0.0            # via -r requirements.in
-jupyterlab-pygments==0.1.1  # via nbconvert
 keras-applications==1.0.8  # via keras, tensorflow
 keras-preprocessing==1.1.2  # via keras, tensorflow
 keras==2.3.1              # via -r requirements.in
-kiwisolver==1.2.0         # via matplotlib
 markdown==3.2.1           # via tensorboard
-markupsafe==1.1.1         # via jinja2
-matplotlib==3.3.1         # via -r requirements.in
-mistune==0.8.4            # via nbconvert
-nbclient==0.5.0           # via nbconvert
-nbconvert==6.0.3          # via jupyter, notebook
-nbformat==5.0.7           # via ipywidgets, nbclient, nbconvert, notebook
-nest-asyncio==1.4.0       # via nbclient
-nodeenv==1.5.0            # via pre-commit
-notebook==6.1.4           # via jupyter, widgetsnbextension
-numpy==1.18.3             # via -r requirements.in, h5py, keras, keras-applications, keras-preprocessing, matplotlib, opencv-contrib-python, opt-einsum, pandas, scipy, tensorboard, tensorflow
+numpy==1.18.3             # via -r requirements.in, h5py, keras, keras-applications, keras-preprocessing, opencv-contrib-python, opt-einsum, pandas, scipy, tensorboard, tensorflow
 oauthlib==3.1.0           # via requests-oauthlib
 opencv-contrib-python==4.4.0.42  # via -r requirements.in
 openpyxl==3.0.5           # via -r requirements.in
 opt-einsum==3.2.1         # via tensorflow
-packaging==20.4           # via bleach
-pandas==1.0.3             # via -r requirements.in
-pandocfilters==1.4.2      # via nbconvert
-parso==0.7.1              # via jedi
+pandas==1.1.4             # via -r requirements.in
 pdf2image==1.14.0         # via -r requirements.in
-pexpect==4.8.0            # via ipython
-pickleshare==0.7.5        # via ipython
-pillow==7.1.2             # via image, matplotlib, pdf2image
-pre-commit==2.6.0         # via -r requirements.in
-prometheus-client==0.8.0  # via notebook
-prompt-toolkit==3.0.7     # via ipython, jupyter-console
+pillow==7.1.2             # via pdf2image
 protobuf==3.11.3          # via tensorboard, tensorflow
-ptyprocess==0.6.0         # via pexpect, terminado
 pyasn1-modules==0.2.8     # via google-auth
 pyasn1==0.4.8             # via pyasn1-modules, rsa
 pycodestyle==2.6.0        # via autopep8
-pycparser==2.20           # via cffi
-pygments==2.7.1           # via ipython, jupyter-console, jupyterlab-pygments, nbconvert, qtconsole
-pyparsing==2.4.7          # via matplotlib, packaging
-pyrsistent==0.17.3        # via jsonschema
-python-dateutil==2.8.1    # via jupyter-client, matplotlib, pandas
-pytz==2020.1              # via django, pandas
-pyyaml==5.3.1             # via keras, pre-commit
-pyzmq==19.0.2             # via jupyter-client, notebook, qtconsole
-qtconsole==4.7.7          # via jupyter
-qtpy==1.9.0               # via qtconsole
+python-dateutil==2.8.1    # via pandas
+pytz==2020.1              # via pandas
+pyyaml==5.3.1             # via keras
 requests-oauthlib==1.3.0  # via google-auth-oauthlib
 requests==2.23.0          # via requests-oauthlib, tensorboard
 rsa==4.0                  # via google-auth
 scipy==1.4.1              # via keras, tensorflow
-send2trash==1.5.0         # via notebook
-six==1.14.0               # via absl-py, argon2-cffi, bleach, cycler, google-auth, google-pasta, grpcio, h5py, image, jsonschema, keras, keras-preprocessing, packaging, protobuf, python-dateutil, tensorboard, tensorflow, virtualenv
-sqlparse==0.3.1           # via django
+six==1.14.0               # via absl-py, google-auth, google-pasta, grpcio, h5py, keras, keras-preprocessing, protobuf, python-dateutil, tensorboard, tensorflow
 tensorboard==2.1.1        # via tensorflow
 tensorflow-estimator==2.1.0  # via tensorflow
 tensorflow==2.1.0         # via -r requirements.in
 termcolor==1.1.0          # via tensorflow
-terminado==0.8.3          # via notebook
-testpath==0.4.4           # via nbconvert
-toml==0.10.1              # via autopep8, pre-commit
-tornado==6.0.4            # via ipykernel, jupyter-client, notebook, terminado
-traitlets==5.0.4          # via ipykernel, ipython, ipywidgets, jupyter-client, jupyter-core, nbclient, nbconvert, nbformat, notebook, qtconsole
+toml==0.10.1              # via autopep8
 urllib3==1.25.9           # via requests
-virtualenv==20.0.31       # via pre-commit
-wcwidth==0.2.5            # via prompt-toolkit
-webencodings==0.5.1       # via bleach
 werkzeug==1.0.1           # via tensorboard
 wheel==0.34.2             # via tensorboard, tensorflow
-widgetsnbextension==3.5.1  # via ipywidgets
 wrapt==1.12.1             # via tensorflow
 xlrd==1.2.0               # via -r requirements.in
-zipp==3.1.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

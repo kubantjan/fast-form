@@ -2,4 +2,3 @@
 setup:
 	pip install pip-tools
 	pip-sync
-	pre-commit install

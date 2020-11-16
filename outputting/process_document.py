@@ -9,7 +9,7 @@ from structure_parser.page_structure_parser import PageStructureParser
 from utils.image_loading import load_images_from_path
 
 
-def process_document_to_excel(document_path: str, processing_config: ProcessingConfig, excel_path: str):
+def process_document_and_add_to_validation_excel(document_path: str, processing_config: ProcessingConfig, excel_path: str):
     if os.path.exists(document_path):
         maybe_patient_id = os.path.basename(document_path).split(".")[0]
         form_data = process_document(processing_config, document_path=document_path)

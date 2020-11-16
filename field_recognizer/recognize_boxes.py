@@ -1,6 +1,7 @@
+import logging
 from typing import List
 
-from pylab import *
+import numpy as np
 
 from field_recognizer.recognizing_dataclasses import RecognizingBoxResult, SingleChoiceStats, RecognizingResult
 from structure_parser.form_structure_dataclasses import Field, FieldType

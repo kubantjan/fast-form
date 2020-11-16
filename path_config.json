@@ -1,6 +1,0 @@
-{
-    "template_image_path": "real_forms/PID_forms/template.pdf",
-    "form_structure_config_path": "real_forms/PID_forms/config.json",
-    "folder_with_documents_path": "../scany",
-    "final_excel_path": "../scany/final_excel.xlsx"
-}

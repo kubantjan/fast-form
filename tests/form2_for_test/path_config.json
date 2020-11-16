@@ -1,6 +1,6 @@
 {
-    "template_image_path": "form2_for_test/template.pdf",
-    "form_structure_config_path": "form2_for_test/config.json",
-    "folder_with_documents_path": "form2_for_test/document.jpg",
-    "model_data_location": "../model_data"
+    "template_path": "tests/form2_for_test/template.pdf",
+    "form_structure_path": "tests/form2_for_test/config.json",
+    "folder_with_documents_path": "tests/form2_for_test/documents",
+    "model_data_location": "model_data"
 }

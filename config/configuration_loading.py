@@ -50,6 +50,6 @@ def load_form_structure(form_structure_config_path: str) -> FormStructure:
 def get_processing_config(paths: PathsForProcessingConfig) -> ProcessingConfig:
     return ProcessingConfig(
         models=load_models(paths.model_data_location),
-        templates=get_templates(paths.template_image_path),
-        form_structure=load_form_structure(paths.form_structure_config_path),
+        templates=get_templates(paths.template_path),
+        form_structure=load_form_structure(paths.form_structure_path),
     )

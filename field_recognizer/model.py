@@ -1,6 +1,10 @@
 import json
+import logging
+import os
 
 from keras.models import model_from_json
+
+logger = logging.getLogger(__name__)
 
 
 def load_model(model_structure_path, model_weights_path):
@@ -16,7 +20,7 @@ def load_model(model_structure_path, model_weights_path):
 
     # load model weights
     loaded_model.load_weights(model_weights_path)
-    print("Loaded model from disk")
+    logger.info(f"Loaded model {os.path.basename(model_structure_path)} from disk")
 
     # evaluate loaded model on test data
     loaded_model.compile(loss='categorical_crossentropy',  # using the cross-entropy loss function

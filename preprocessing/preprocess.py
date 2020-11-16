@@ -62,6 +62,5 @@ def preprocess(im: np.ndarray, form_templates: List[Template]) -> np.ndarray:
     normalized_image = normalize(im)
 
     fitted_image, template_index = fit_image_to_templates(normalized_image, templates=form_templates)
-    logger.info(f"Best fit page was {template_index}")
 
     return fitted_image
