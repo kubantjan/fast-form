@@ -5,32 +5,58 @@ project from UniHack hackathon, helps to extract data from forms.
 ## Installation
 
 To use first install anaconda on your computer https://www.anaconda.com/
-
-Then create conda environment with python 3.7.9 and poppler:
+then open anaconda terminal and run:
 ```
-conda env create -f conda.yml -y
+conda create -n fast-form python=3.7.9  
 conda activate fast-form
-pip install requirements.txt
+pip install fast-form
 ```
+
+if the installation was successful you can start using the tool. 
+
+first test it:
+
+```
+python -m fast_form.main --version
+```
+should return version of fast form and 
+
+```
+python -m fast_form.main
+```
+
+should successfully process some test files of the project. Now for the next steps I assume you stay in this terminal
+and do everything in there.
 
 ## Run
 
-First create some folder and put there the pdfs you want to process. Then fill in the path_config.json file
-you have to have your template_file, configuration file, the folder where you have your scanned pdfs and finally
-path to excel you want to create the result sheet in (in case it does not exist it will be created)
+First create some folder and put there the pdfs you want to process. Then fill in the path_config.json file:
 
-Fist run
-```bash
-python process_to_validation_excel.py
+
+```
+{
+    "template_path": "/pathtotemplate/template.jpg",
+    "form_structure_path": "/pathtoconfig/config.json",
+    "folder_with_documents_path": "/pathtodocumentfolder/documents",
+    "final_excel_path": "/pathtofinalexcel/final_excel.xlsx"
+}
+```
+
+you have to have your template_file, form structure configuration file, the folder where you have your scanned pdfs and finally
+path to excel you want to create the result sheet in (in case it does not exist it will be created automatically)
+
+after the config is setup you can run the processing. First step is running the script to output validation excel:
+```
+python -m fast_form.main --path_to_path_config /path/to/json/above
 ``` 
-it should create an excel in the data folder with the processed answers. Go through. The answers that seemed suspicious
+it should create an excel in the data folder with the scanned documents answers. Go through it. The answers that seemed suspicious
 have pictures there to show you the answers. You can correct those. We use -1 for answers that had multiple crossed 
 fields (or we think so) and -2 in case no field was crossed.
 
 When you are satisfied, save the excel and run
 
 ```bash
-python process_to_final_excel.py
+python -m fast_form.main --path_to_path_config /path/to/json/above --final-step
 ``` 
 which will create a sheet in the provided excel with the results
 

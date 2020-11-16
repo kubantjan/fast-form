@@ -32,7 +32,7 @@ setup(
     description='Automatically process scanned forms',
     long_description=long_description,
     long_description_content_type="text/markdown",
-
+    include_package_data=True,
     # The project's main homepage.
     url='https://github.com/kubantjan/fast-form',
     # Author details

@@ -1,0 +1,6 @@
+include fast_form/*/*/*.json
+include fast_form/*/*/*.pdf
+include fast_form/*/*/*.jpg
+include fast_form/*/*/*/*.jpg
+include fast_form/model_data/*.h5
+include fast_form/model_data/*.json
