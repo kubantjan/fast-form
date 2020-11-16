@@ -15,7 +15,7 @@ from setuptools import find_packages, setup
 
 here = path.abspath(path.dirname(__file__))
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md')) as f:
