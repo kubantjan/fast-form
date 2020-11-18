@@ -1,8 +1,11 @@
-#(install dependency python manager, install dependencies, add pre-commit hook that cleans up notebooks upon a commit)
 setup:
 	pip install pip-tools
 	pip-sync
 
+setup-dev:
+	pip install pip-tools
+	pip-sync requirements.txt dev-requirements.txt
+	pre-commit install
 
 upload_to_pypi:
 	pip install twine

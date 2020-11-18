@@ -4,7 +4,9 @@ import os
 
 from fast_form.outputting.utils_for_main import load_paths_for_processing_config, process_to_validation_excel, \
     process_to_final_excel
-from fast_form.version import VERSION
+
+with open('../VERSION') as version_file:
+    VERSION = version_file.read().strip()
 
 
 def get_parser():
