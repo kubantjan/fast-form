@@ -1,3 +1,4 @@
+import logging
 import os
 
 from fast_form.config.configuration_dataclasses import ProcessingConfig
@@ -7,6 +8,8 @@ from fast_form.preprocessing.preprocess import preprocess
 from fast_form.structure_parser.form_structure_dataclasses import FormStructure
 from fast_form.structure_parser.page_structure_parser import PageStructureParser
 from fast_form.utils.image_loading import load_images_from_path
+
+logger = logging.getLogger(__name__)
 
 
 def process_document_and_add_to_validation_excel(document_path: str, processing_config: ProcessingConfig,
@@ -33,6 +36,7 @@ def process_document(processing_config: ProcessingConfig,
     for image, template, (page_name, page_structure) in zip(images,
                                                             processing_config.templates,
                                                             processing_config.form_structure.form_page_data.items()):
+        logger.debug(f"Processing page {page_name}")
         image = preprocess(image, [template])
         page_structure_parser = PageStructureParser(page_structure)
         page_data = page_structure_parser.process_page(image)

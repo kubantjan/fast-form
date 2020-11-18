@@ -24,9 +24,10 @@ def process_to_validation_excel(paths_for_processing_config: PathsForProcessingC
 
     document_names = [file for file in os.listdir(paths_for_processing_config.folder_with_documents_path) if
                       file.endswith('.pdf') or file.endswith(".jpg") or file.endswith(".png")]
-    logging.info(f"Processing to validation excel from {paths_for_processing_config.folder_with_documents_path}. Number"
+    logger.info(f"Processing to validation excel from {paths_for_processing_config.folder_with_documents_path}. Number"
                  f" of documents is {len(document_names)}")
     for document_name in document_names:
+        logging.debug(f"Processing document {document_name}")
         process_document_and_add_to_validation_excel(
             os.path.join(paths_for_processing_config.folder_with_documents_path, document_name),
             processing_config,

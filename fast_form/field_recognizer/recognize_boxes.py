@@ -44,12 +44,14 @@ def recognize_single_choice(imgs: List[np.ndarray], single_choice_stats: SingleC
     accuracies_of_selected_choices = [(i, box_result.accuracy) for i, box_result in enumerate(recognizing_box_results)
                                       if box_result.recognized]
     if len(accuracies_of_selected_choices) > 1:
-        logger.warning(f"Several possible selected choice boxes, returning {MULTIPLE_RESPONSES_FOUND}")
+        logger.debug(
+            f"Several possible selected choice boxes: {[i for i, _ in accuracies_of_selected_choices]},"
+            f" returning {MULTIPLE_RESPONSES_FOUND}")
         selected = MULTIPLE_RESPONSES_FOUND
     elif len(accuracies_of_selected_choices) == 1:
         selected = accuracies_of_selected_choices[0][0]
     else:
-        logger.warning(f"No possible selected choice boxes, returning {NO_RESPONSE_FOUND}")
+        logger.debug(f"No possible selected choice boxes, returning {NO_RESPONSE_FOUND}")
         selected = NO_RESPONSE_FOUND
     return RecognizingResult(
         recognized=selected,

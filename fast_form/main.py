@@ -6,13 +6,6 @@ from fast_form.outputting.utils_for_main import load_paths_for_processing_config
     process_to_final_excel
 from fast_form.version import VERSION
 
-logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S')
-
-logger = logging.getLogger(__name__)
-
 
 def get_parser():
     """
@@ -26,7 +19,7 @@ def get_parser():
                      help="""Path to config file with paths to template pdf, leaving blank will run the file with
                       default configuration on path path_config.json. Required paths are:
                         {
-                            "template_path": "path",
+                            "template_path": "path",    
                             "form_structure_config_path": "path",
                             "folder_with_documents_path": "path",
                             "final_excel_path": "path"
@@ -38,13 +31,26 @@ def get_parser():
                      default=False,
                      help='If provided, the program will run the final step and output the final excel based on the'
                           'validation excel')
+    par.add_argument('--verbose',
+                     action='store_true',
+                     default=False,
+                     help='If provided, the program output verbosely what is happening')
     return par
 
 
 if __name__ == '__main__':
-    logger.info("Starting app, loading tools needed for processing")
+
     parser = get_parser()
     args = parser.parse_args()
+
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)-8s %(name)s %(message)s',
+        level=logging.INFO if not args.verbose else logging.DEBUG,
+        datefmt='%Y-%m-%d %H:%M:%S')
+
+    logger = logging.getLogger(__name__)
+    logger.info("Starting app, loading tools needed for processing")
+
     paths_for_processing = load_paths_for_processing_config(args.path_to_path_config)
     if not args.final_step:
         process_to_validation_excel(paths_for_processing)
