@@ -84,7 +84,7 @@ setup(
         'numpy>=1.18.3',
         'opencv-contrib-python>=4.4.0.42',
         'pandas>=1.1.4',
-        'tensorflow<=2.1.0',
+        'tensorflow<2.4.0',
         'keras<=2.3.1',
         'autopep8>=1.5.4',
         'dacite>=1.5.1',
