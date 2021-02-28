@@ -81,10 +81,11 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        'scipy<=1.4.1'
         'numpy>=1.18.3',
         'opencv-contrib-python>=4.4.0.42',
-        'pandas>=1.1.4',
         'tensorflow<=2.1.0',
+        'pandas>=1.1.4',
         'keras<=2.3.1',
         'autopep8>=1.5.4',
         'dacite>=1.5.1',
