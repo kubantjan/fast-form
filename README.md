@@ -10,7 +10,7 @@ Project from UniHack hackathon, helps to extract data from forms.
 To use first install anaconda on your computer https://www.anaconda.com/
 then open anaconda terminal and run:
 ```
-conda create -n fast-form python=3.7.9  
+conda create -n fast-form python=3.7.10
 conda activate fast-form
 pip install fast-form
 ```
