@@ -81,6 +81,7 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
+        'scipy<=1.4.1'
         'numpy>=1.18.3',
         'opencv-contrib-python>=4.4.0.42',
         'tensorflow<=2.1.0',
