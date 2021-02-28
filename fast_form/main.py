@@ -5,17 +5,12 @@ import os
 from fast_form.outputting.utils_for_main import load_paths_for_processing_config, process_to_validation_excel, \
     process_to_final_excel
 
-with open('../VERSION') as version_file:
-    VERSION = version_file.read().strip()
-
 
 def get_parser():
     """
     Creates a new argument parser.
     """
     par = argparse.ArgumentParser('fast-form')
-    version = '%(prog)s ' + VERSION
-    par.add_argument('--version', '-v', action='version', version=version)
     par.add_argument('--path_to_path_config',
                      type=str,
                      help="""Path to config file with paths to template pdf, leaving blank will run the file with
