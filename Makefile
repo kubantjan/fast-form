@@ -1,13 +1,13 @@
+CONDA_ENV=fast-form
+
+conda-create:
+	conda env create -f conda.yml --name $(CONDA_ENV)
+
+
 setup:
-	pip install pip-tools
-	pip-sync
+	python -m pip install --upgrade setuptools
+	python setup.py install
+
 
 setup-dev:
-	pip install pip-tools
-	pip-sync requirements.txt dev-requirements.txt
-	pre-commit install
-
-upload_to_pypi:
-	pip install twine
-	python setup.py sdist
-	twine upload dist/*
+	pip install -e .[dev]

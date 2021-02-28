@@ -28,7 +28,7 @@ def get_parser():
                         }
                         """,
                      default=os.path.join(os.path.dirname(__file__), "tests", "form1_for_test", "path_config.json"))
-    par.add_argument('--final_step',
+    par.add_argument('--final-step',
                      action='store_true',
                      default=False,
                      help='If provided, the program will run the final step and output the final excel based on the'
