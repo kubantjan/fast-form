@@ -100,10 +100,9 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'dev': [
-            'matplotlib >= 3.3.1',
-            'pre-commit >= 2.6.0',
-            'jupyter',
-            'ipykernel >= 5.3.4'
+            'matplotlib',
+            'ipykernel',
+            'pre-commit'
         ]
     },
 
