@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Optional
 
 from fast_form.config.configuration_dataclasses import ProcessingConfig
 from fast_form.field_recognizer.recognize_all import recognize
@@ -13,11 +14,12 @@ logger = logging.getLogger(__name__)
 
 
 def process_document_and_add_to_validation_excel(document_path: str, processing_config: ProcessingConfig,
-                                                 excel_path: str):
+                                                 excel_path: str, patient_id: Optional[str] = None):
     if os.path.exists(document_path):
-        maybe_patient_id = os.path.basename(document_path).split(".")[0]
+        if not patient_id:
+            patient_id = os.path.basename(document_path).split(".")[0]
         form_data = process_document(processing_config, document_path=document_path)
-        df, images = output_data(form_data, maybe_patient_id=maybe_patient_id)
+        df, images = output_data(form_data, maybe_patient_id=patient_id)
 
         save_data(df, images, excel_path=excel_path)
     else:

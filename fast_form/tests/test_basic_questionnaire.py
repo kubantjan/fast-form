@@ -6,7 +6,8 @@ import pandas as pd
 from fast_form.config.configuration_loading import get_processing_config
 from fast_form.outputting.ouput_data import output_data
 from fast_form.outputting.process_document import process_document, process_document_and_add_to_validation_excel
-from fast_form.outputting.utils_for_main import load_paths_for_processing_config, VALIDATION_EXCEL_NAME
+from fast_form.outputting.utils_for_main import load_paths_for_processing_config, VALIDATION_EXCEL_NAME, \
+    process_to_final_excel
 
 
 class TestWholeProcess(unittest.TestCase):
@@ -35,7 +36,10 @@ class TestWholeProcess(unittest.TestCase):
             os.remove(validation_excel_path)
         process_document_and_add_to_validation_excel(document_path=self.document_path,
                                                      processing_config=self.processing_config,
-                                                     excel_path=validation_excel_path)
+                                                     excel_path=validation_excel_path,
+                                                     patient_id="test1")
         process_document_and_add_to_validation_excel(document_path=self.document_path,
                                                      processing_config=self.processing_config,
-                                                     excel_path=validation_excel_path)
+                                                     excel_path=validation_excel_path,
+                                                     patient_id="test2")
+        process_to_final_excel(self.paths_for_processing_config)

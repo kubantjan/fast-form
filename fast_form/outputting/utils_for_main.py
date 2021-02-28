@@ -3,12 +3,14 @@ import logging
 import os
 
 import dacite
+import openpyxl
 import pandas as pd
 from openpyxl import load_workbook
 
 from fast_form.config.configuration_dataclasses import PathsForProcessingConfig
 from fast_form.config.configuration_loading import get_processing_config
 from fast_form.outputting.process_document import process_document_and_add_to_validation_excel
+from fast_form.structure_parser.form_structure_dataclasses import FieldType
 
 SHEET_WITH_RESULTS = "automatic_results"
 VALIDATION_EXCEL_NAME = "validation_excel.xlsx"
@@ -25,7 +27,7 @@ def process_to_validation_excel(paths_for_processing_config: PathsForProcessingC
     document_names = [file for file in os.listdir(paths_for_processing_config.folder_with_documents_path) if
                       file.endswith('.pdf') or file.endswith(".jpg") or file.endswith(".png")]
     logger.info(f"Processing to validation excel from {paths_for_processing_config.folder_with_documents_path}. Number"
-                 f" of documents is {len(document_names)}")
+                f" of documents is {len(document_names)}")
     for document_name in document_names:
         logging.debug(f"Processing document {document_name}")
         process_document_and_add_to_validation_excel(
@@ -48,6 +50,7 @@ def process_to_final_excel(paths_for_processing_config: PathsForProcessingConfig
     one_patient_per_row_df = (
         validation_df
             .set_index(['patient_id', 'name'])
+            .loc[lambda df: df.field_type == FieldType.SINGLE_CHOICE]
             .data
             .apply(lambda response_or_error: response_or_error if response_or_error >= 0 else "")
             .unstack(level=1)
@@ -65,8 +68,10 @@ def process_to_final_excel(paths_for_processing_config: PathsForProcessingConfig
                 sheet_name=SHEET_WITH_RESULTS)
 
             combined_one_patient_per_row_df = one_patient_per_row_df.combine_first(old_one_patient_per_row_df)
+        book = load_workbook(paths_for_processing_config.final_excel_path)
+    else:
+        book = openpyxl.Workbook()
 
-    book = load_workbook(paths_for_processing_config.final_excel_path)
     writer = pd.ExcelWriter(paths_for_processing_config.final_excel_path, engine='openpyxl')
     if SHEET_WITH_RESULTS in book.sheetnames:
         book.remove(book[SHEET_WITH_RESULTS])
