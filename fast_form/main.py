@@ -1,6 +1,8 @@
 import argparse
 import logging
 import os
+import shutil
+from pathlib import Path
 
 from fast_form.outputting.utils_for_main import load_paths_for_processing_config, process_to_validation_excel, \
     process_to_final_excel
@@ -22,7 +24,12 @@ def get_parser():
                             "final_excel_path": "path"
                         }
                         """,
-                     default=os.path.join(os.path.dirname(__file__), "tests", "form1_for_test", "path_config.json"))
+                     default=os.path.join("fast-form-data", "path_config.json"))
+    par.add_argument('--init',
+                     action='store_true',
+                     default=False,
+                     help='If provided, the program will initialize the data in the folder the user runs the'
+                          'program from.')
     par.add_argument('--final-step',
                      action='store_true',
                      default=False,
@@ -48,8 +55,14 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     logger.info("Starting app, loading tools needed for processing")
 
-    paths_for_processing = load_paths_for_processing_config(args.path_to_path_config)
-    if not args.final_step:
-        process_to_validation_excel(paths_for_processing)
-    else:
+    if args.final_step:
+        paths_for_processing = load_paths_for_processing_config(args.path_to_path_config)
         process_to_final_excel(paths_for_processing)
+    elif args.init:
+        shutil.rmtree('fast-form-data', ignore_errors=True)
+        # Path("fast-form-data").mkdir()
+        path_to_test_folder = os.path.join(os.path.dirname(__file__), "tests", "form1_for_test")
+        shutil.copytree(path_to_test_folder, "./fast-form-data/")
+    else:
+        paths_for_processing = load_paths_for_processing_config(args.path_to_path_config)
+        process_to_validation_excel(paths_for_processing)
