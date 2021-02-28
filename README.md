@@ -1,6 +1,8 @@
 # fast-form
-[![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/fast-form/)
-project from UniHack hackathon, helps to extract data from forms. 
+[![PyPI Latest Release](https://img.shields.io/pypi/v/fast-form.svg)](https://pypi.org/project/fast-form/)
+
+
+Project from UniHack hackathon, helps to extract data from forms. 
 
 
 ## Installation
