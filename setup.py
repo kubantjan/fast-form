@@ -7,6 +7,7 @@ https://github.com/pypa/sampleproject
 """
 
 # To use a consistent encoding
+import os
 from codecs import open
 from os import path
 
@@ -19,8 +20,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md')) as f:
     long_description = f.read()
 
-with open('VERSION') as version_file:
-    VERSION = version_file.read().strip()
+VERSION = os.getenv('VERSION')
 
 setup(
     name='fast-form',
