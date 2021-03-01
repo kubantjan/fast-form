@@ -28,14 +28,14 @@ def get_parser():
     Creates a new argument parser.
     """
     par = argparse.ArgumentParser('fast-form')
-    subparsers = par.add_subparsers(title='subcommands', description='valid subcommands', help='FILL ME')
-    init_subparser = subparsers.add_parser('init', help='FILL ME')
+    subparsers = par.add_subparsers(title='subcommands')
+    init_subparser = subparsers.add_parser('init', help='Creates data directory - bootstraps project structure')
     init_subparser.set_defaults(func=init)
 
-    extract_subparser = subparsers.add_parser('extract', help='FILL ME')
+    extract_subparser = subparsers.add_parser('extract', help='Extracts data from questionares and creates validation excel')
     extract_subparser.set_defaults(func=extract)
 
-    finalize_subparser = subparsers.add_parser('finalize', help='FILL ME')
+    finalize_subparser = subparsers.add_parser('finalize', help='Parses validation excel to produce finalized output. One questionare per line')
     finalize_subparser.set_defaults(func=finalize)
 
     par.add_argument('--version',
