@@ -41,9 +41,15 @@ class ProcessingConfig:
     form_structure: FormStructure
 
 
+VALIDATION_EXCEL_NAME = "validation_excel.xlsx"
+RESULT_EXCEL_NAME = "result.xlsx"
+
+
 @dataclass
 class PathsForProcessingConfig:
     template_path: str
     form_structure_path: str
     folder_with_documents_path: str
-    final_excel_path: str = "result.xlsx"
+    final_excel_path: str = RESULT_EXCEL_NAME
+    validation_excel_path: str = VALIDATION_EXCEL_NAME
+    root: str = "."

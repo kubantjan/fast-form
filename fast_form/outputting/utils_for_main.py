@@ -7,22 +7,21 @@ import openpyxl
 import pandas as pd
 from openpyxl import load_workbook
 
-from fast_form.config.configuration_dataclasses import PathsForProcessingConfig
+from fast_form.config.configuration_dataclasses import PathsForProcessingConfig, VALIDATION_EXCEL_NAME
 from fast_form.config.configuration_loading import get_processing_config
 from fast_form.outputting.process_document import process_document_and_add_to_validation_excel
 from fast_form.structure_parser.form_structure_dataclasses import FieldType
 
 SHEET_WITH_RESULTS = "automatic_results"
-VALIDATION_EXCEL_NAME = "validation_excel.xlsx"
 
 logger = logging.getLogger(__name__)
 
 
 def process_to_validation_excel(paths_for_processing_config: PathsForProcessingConfig):
     processing_config = get_processing_config(paths_for_processing_config)
-    validation_excel_path = os.path.join(paths_for_processing_config.folder_with_documents_path, VALIDATION_EXCEL_NAME)
-    if os.path.exists(validation_excel_path):
-        os.remove(validation_excel_path)
+
+    if os.path.exists(paths_for_processing_config.validation_excel_path):
+        os.remove(paths_for_processing_config.validation_excel_path)
 
     document_names = [file for file in os.listdir(paths_for_processing_config.folder_with_documents_path) if
                       file.endswith('.pdf') or file.endswith(".jpg") or file.endswith(".png")]
@@ -33,20 +32,19 @@ def process_to_validation_excel(paths_for_processing_config: PathsForProcessingC
         process_document_and_add_to_validation_excel(
             os.path.join(paths_for_processing_config.folder_with_documents_path, document_name),
             processing_config,
-            validation_excel_path
+            paths_for_processing_config.validation_excel_path
         )
     logger.info(
         f"Successfully processed all documents from '{paths_for_processing_config.folder_with_documents_path}' to "
-        f"validation excel '{validation_excel_path}'")
+        f"validation excel '{paths_for_processing_config.validation_excel_path}'")
 
 
 def process_to_final_excel(paths_for_processing_config: PathsForProcessingConfig):
-    validation_excel_path = os.path.join(paths_for_processing_config.folder_with_documents_path,
-                                         VALIDATION_EXCEL_NAME)
-    if not os.path.exists(validation_excel_path):
-        raise FileNotFoundError(f"Validation excel with path '{validation_excel_path}' must exist")
+    if not os.path.exists(paths_for_processing_config.validation_excel_path):
+        raise FileNotFoundError(
+            f"Validation excel with path '{paths_for_processing_config.validation_excel_path}' must exist")
 
-    validation_df = pd.read_excel(validation_excel_path)
+    validation_df = pd.read_excel(paths_for_processing_config.validation_excel_path)
     one_patient_per_row_df = (
         validation_df
             .set_index(['patient_id', 'name'])
@@ -78,7 +76,7 @@ def process_to_final_excel(paths_for_processing_config: PathsForProcessingConfig
     writer.book = book
     combined_one_patient_per_row_df.to_excel(writer, sheet_name=SHEET_WITH_RESULTS)
     writer.save()
-    logger.info(f"Successfully processed from validation excel: '{validation_excel_path}'"
+    logger.info(f"Successfully processed from validation excel: '{paths_for_processing_config.validation_excel_path}'"
                 f" to final excel '{paths_for_processing_config.final_excel_path}'")
 
 
@@ -89,8 +87,10 @@ def load_paths_for_processing_config(path_configuration: str) -> PathsForProcess
     with open(path_configuration, "rb") as f:
         relative_paths = dacite.from_dict(data_class=PathsForProcessingConfig, data=json.loads(f.read()))
     return PathsForProcessingConfig(
+        root=join("."),
         template_path=join(relative_paths.template_path),
         folder_with_documents_path=join(relative_paths.folder_with_documents_path),
         final_excel_path=join(relative_paths.final_excel_path),
-        form_structure_path=join(relative_paths.form_structure_path)
+        form_structure_path=join(relative_paths.form_structure_path),
+        validation_excel_path=join(VALIDATION_EXCEL_NAME)
     )
