@@ -22,6 +22,7 @@ def finalize(args):
     paths_for_processing = load_paths_for_processing_config(args.path_to_path_config)
     process_to_final_excel(paths_for_processing)
 
+
 def get_parser():
     """
     Creates a new argument parser.
@@ -41,7 +42,6 @@ def get_parser():
                      action='store_true',
                      default=False,
                      help='If provided, the program outputs version.')
-
 
     par.add_argument('--verbose',
                      action='store_true',
@@ -65,7 +65,7 @@ def get_parser():
     return par
 
 
-if __name__ == '__main__':
+def fast_form():
     parser = get_parser()
     args = parser.parse_args()
     if args.version:
@@ -82,3 +82,7 @@ if __name__ == '__main__':
             args.func(args)
         else:
             parser.print_help()
+
+
+if __name__ == '__main__':
+    fast_form()
