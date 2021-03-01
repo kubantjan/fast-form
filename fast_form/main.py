@@ -70,14 +70,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.version:
         print("This will print version of this program in the future")
-    logging.basicConfig(
-        format='%(asctime)s %(levelname)-8s %(name)s %(message)s',
-        level=logging.INFO if not args.verbose else logging.DEBUG,
-        datefmt='%Y-%m-%d %H:%M:%S')
-
-    logger = logging.getLogger(__name__)
-    logger.info("Starting app, loading tools needed for processing")
-    if args.__contains__("func"):
-        args.func(args)
     else:
-        parser.print_help()
+        logging.basicConfig(
+            format='%(asctime)s %(levelname)-8s %(name)s %(message)s',
+            level=logging.INFO if not args.verbose else logging.DEBUG,
+            datefmt='%Y-%m-%d %H:%M:%S')
+
+        logger = logging.getLogger(__name__)
+        logger.info("Starting app, loading tools needed for processing")
+        if args.__contains__("func"):
+            args.func(args)
+        else:
+            parser.print_help()
