@@ -17,26 +17,56 @@ pip install fast-form
 
 if the installation was successful you can start using the tool. 
 
-first test it:
+first, you can test if the CLI works correctly, by running
 
+```bash
+fast-form --version
 ```
-python -m fast_form.main --version
-```
-should return version of fast form and 
-
-```
-python -m fast_form.main
-```
-
-should successfully process some test files of the project. Now for the next steps I assume you stay in this terminal
-and do everything in there.
 
 ## Run
-
-First create some folder and put there the pdfs you want to process. Then fill in the path_config.json file:
-
+To run fast-form on your data, first, initialize data folder. 
+```bash
+fast-form init
+```
+This will create a folder containing test data and all the config files.
+```
+fast-form-data
+│   config.json    
+│   path_config.json
+│   template.pdf
+└───documents
+    │   document.jpg
+    │   ...
 
 ```
+All you have to do is replace files in `documents` folder with scanned pdfs you want to process.
+To test it out, you can run it as is.
+Simply call following command without changing the directory:
+
+```bash
+fast-form extract
+```
+This will create `validation_excel.xlsx`, which you can open in office suite and manually fix all the results that were not recognized correctly. 
+
+ * -1 is used for answers that were recognized as having multiple fields crossed
+ * -2 in case no crossed filed was recognized
+ You can replace those, in case picture recognition did a poor job.
+
+Once you are happy with the result, save the validation_excel and run
+
+```bash
+fast-form finalize
+```
+This will compile validated data in to format "one questionare per line" and append it in to excel configured in `final_excel_path` in `path_config.json`.
+
+
+## Advanced configuration
+To configure fast-form for custom questionare, one has to provide
+ * template - empty questionare with perfect quality. Use original pdf file used for printing the questionares
+ * field configuration - description of all the fields in the questionare and their exact position on the page those has to be done manually for the time being and there is no visual tool to do it. We have [ jupyter notebook for this in repository](https://github.com/kubantjan/fast-form/blob/master/notebooks/create_config.ipynb) for this task, but workflow is far from smooth for the time being.
+
+Configure path to these files in `path_config.json`
+```json
 {
     "template_path": "/pathtotemplate/template.jpg",
     "form_structure_path": "/pathtoconfig/config.json",
@@ -44,25 +74,6 @@ First create some folder and put there the pdfs you want to process. Then fill i
     "final_excel_path": "/pathtofinalexcel/final_excel.xlsx"
 }
 ```
-
-you have to have your template_file, form structure configuration file, the folder where you have your scanned pdfs and finally
-path to excel you want to create the result sheet in (in case it does not exist it will be created automatically)
-
-after the config is setup you can run the processing. First step is running the script to output validation excel:
-```
-python -m fast_form.main --path_to_path_config /path/to/json/above
-``` 
-it should create an excel in the data folder with the scanned documents answers. Go through it. The answers that seemed suspicious
-have pictures there to show you the answers. You can correct those. We use -1 for answers that had multiple crossed 
-fields (or we think so) and -2 in case no field was crossed.
-
-When you are satisfied, save the excel and run
-
-```bash
-python -m fast_form.main --path_to_path_config /path/to/json/above --final-step
-``` 
-which will create a sheet in the provided excel with the results
-
 
 
 ## Development
