@@ -90,9 +90,10 @@ You can use pdf version of the file, that is used to print the questionnaires.
 Simply a folder where you put all the scanned questionnaires to be processed.
 Once files have been processed, it might be good idea to archive them.
 
-#### final_excel_path
-If you want the results to be appended to your existing excel document, provide this path, otherwise fast-form will create new excel document.
+#### final_excel.xlsx
+If you want the results to be appended to your existing excel document, provide path to this file, otherwise fast-form will create new excel document.
 
+___________________
 
 Once you provided all the configuration files, you can process the files using following loop
  1. Fill batch of scans in to documents folder.
