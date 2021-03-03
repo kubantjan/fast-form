@@ -91,7 +91,7 @@ Simply a folder where you put all the scanned questionnaires to be processed.
 Once files have been processed, it might be good idea to archive them.
 
 #### final_excel_path
-If you want the results to be appended to your excel document.
+If you want the results to be appended to your existing excel document, provide this path, otherwise fast-form will create new excel document.
 
 
 Once you provided all the configuration files, you can process the files using following loop
