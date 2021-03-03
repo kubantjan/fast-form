@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 def load_model(model_structure_path, model_weights_path):
-
     # load model structure
     with open(model_structure_path, 'r') as json_file:
         loaded_model_json = json_file.read()

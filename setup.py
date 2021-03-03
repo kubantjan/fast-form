@@ -81,18 +81,17 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'scipy<=1.4.1'
-        'numpy>=1.18.3',
         'opencv-contrib-python>=4.4.0.42',
-        'tensorflow<=2.1.0',
+        'numpy<=1.19.2',
+        'h5py<=2.10.0',
+        'tensorflow>=2.4.1',
         'pandas>=1.1.4',
-        'keras<=2.3.1',
+        'keras>=2.4.3',
         'autopep8>=1.5.4',
         'dacite>=1.5.1',
         'openpyxl>=3.0.5',
         'pdf2image>=1.14.0',
         'xlrd>=1.2.0',
-        'h5py < 3.0.0'
     ],
 
     # List additional groups of dependencies here (e.g. development
