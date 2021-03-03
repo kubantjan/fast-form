@@ -11,7 +11,7 @@ To use fast-form first install [Anaconda](https://www.anaconda.com/) on your com
 https://www.anaconda.com/products/individual#Downloads
 you can keep default options for all the configurations of Installation wizard.
 
-then open anaconda prompt and run these commands one by one:
+then open *Anaconda Prompt* and run these commands one by one:
 ```
 conda create -n fast-form python=3.7.10
 conda activate fast-form
@@ -41,7 +41,8 @@ fast-form extract
 This will create `validation_excel.xlsx`, which you can open in office suite and manually fix all the results that were not recognized correctly. 
 
  * -1 is used for answers that were recognized as having multiple fields crossed
- * -2 in case no crossed filed was recognized
+ * -2 in case no crossed field was recognized
+ 
  You can replace those, in case picture recognition did a poor job.
 
 Once you are happy with the result, save the validation excel and run
@@ -49,7 +50,7 @@ Once you are happy with the result, save the validation excel and run
 ```bash
 fast-form finalize
 ```
-This will compile validated data in to format "one questionare per line" and append it in to excel configured in `final_excel_path` in `path_config.json`.
+This will compile validated data in to format "one questionnaire per line" and append it in to excel configured in `final_excel_path` in `path_config.json`.
 
 
 ## Using fast-form
@@ -64,10 +65,10 @@ fast-form-data
     │   ...
 
 ```
-To configure fast-form for your custom quetionare, you will have to replace/reconfigure these files
+To configure fast-form for your custom questionnaire, you will have to replace/reconfigure these files
 #### path_config.json
 Provides paths to all files and folders necessary for the script to run.
-You can either let it as is and change the filenames, or change this configuration using any plain text processor.
+You can either let it as is and change the filenames, or change this configuration using any plain text processor (e.g. Notepad).
 ```json
 {
     "template_path": "/pathtotemplate/template.jpg",
@@ -78,15 +79,15 @@ You can either let it as is and change the filenames, or change this configurati
 ```
 
 #### config.json
-Contains description of all the fields in the questionare and their exact position on the page.
+Contains description of all the fields in the questionnaire and their exact position on the page.
 Those configs have to be created manually using the template and there is no visual tool to do it. We have a [ jupyter notebook](https://github.com/kubantjan/fast-form/blob/master/notebooks/create_config.ipynb) for this task, but workflow is far from smooth at this point.
 
 #### template.pdf
-Is clear, empty questionare, used as template to correctly scale and rotate scanned files.
-You can use pdf version of the file, that is used to print the questionares.
+Is clear, empty questionnaire, used as a template to correctly scale and rotate scanned files.
+You can use pdf version of the file, that is used to print the questionnaires.
 
 #### documents
-Simply a folder where you put all the scanned questionares to be processed.
+Simply a folder where you put all the scanned questionnaires to be processed.
 Once files have been processed, it might be good idea to archive them.
 
 #### final_excel_path
