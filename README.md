@@ -7,42 +7,34 @@ Project from UniHack hackathon, helps to extract data from forms.
 
 ## Installation
 
-To use first install anaconda on your computer https://www.anaconda.com/
-then open anaconda terminal and run:
+To use fast-form first install [Anaconda](https://www.anaconda.com/) on your computer from:
+https://www.anaconda.com/products/individual#Downloads
+you can keep default options for all the configurations of Installation wizard.
+
+then open anaconda prompt and run these commands one by one:
 ```
 conda create -n fast-form python=3.7.10
 conda activate fast-form
 pip install fast-form
 ```
+Installing dependencies will take couple of minuts.
 
-if the installation was successful you can start using the tool. 
 
-first, you can test if the CLI works correctly, by running
+If the installation was successful, you can test if the CLI works correctly, by running:
 
 ```bash
 fast-form --version
 ```
+Now you can start using the tool.
 
-## Run
-To run fast-form on your data, first, initialize data folder. 
+## Test Run
+To run fast-form, first, initialize data folder:
 ```bash
 fast-form init
 ```
-This will create a folder containing test data and all the config files.
-```
-fast-form-data
-│   config.json    
-│   path_config.json
-│   template.pdf
-└───documents
-    │   document.jpg
-    │   ...
+This will create a folder `fast-form-data` containing test data and all the config files in your current working path.
 
-```
-All you have to do is replace files in `documents` folder with scanned pdfs you want to process.
-To test it out, you can run it as is.
-Simply call following command without changing the directory:
-
+You will want to customize these files later on, for the test run, leave them as they are and run:
 ```bash
 fast-form extract
 ```
@@ -52,7 +44,7 @@ This will create `validation_excel.xlsx`, which you can open in office suite and
  * -2 in case no crossed filed was recognized
  You can replace those, in case picture recognition did a poor job.
 
-Once you are happy with the result, save the validation_excel and run
+Once you are happy with the result, save the validation excel and run
 
 ```bash
 fast-form finalize
@@ -60,12 +52,22 @@ fast-form finalize
 This will compile validated data in to format "one questionare per line" and append it in to excel configured in `final_excel_path` in `path_config.json`.
 
 
-## Advanced configuration
-To configure fast-form for custom questionare, one has to provide
- * template - empty questionare with perfect quality. Use original pdf file used for printing the questionares
- * field configuration - description of all the fields in the questionare and their exact position on the page those has to be done manually for the time being and there is no visual tool to do it. We have [ jupyter notebook for this in repository](https://github.com/kubantjan/fast-form/blob/master/notebooks/create_config.ipynb) for this task, but workflow is far from smooth for the time being.
+## Using fast-form
+`fast-form init` created following directory structure
+```
+fast-form-data
+│   path_config.json
+│   config.json    
+│   template.pdf
+└───documents
+    │   document.jpg
+    │   ...
 
-Configure path to these files in `path_config.json`
+```
+To configure fast-form for your custom quetionare, you will have to replace/reconfigure these files
+#### path_config.json
+Provides paths to all files and folders necessary for the script to run.
+You can either let it as is and change the filenames, or change this configuration using any plain text processor.
 ```json
 {
     "template_path": "/pathtotemplate/template.jpg",
@@ -74,6 +76,21 @@ Configure path to these files in `path_config.json`
     "final_excel_path": "/pathtofinalexcel/final_excel.xlsx"
 }
 ```
+
+#### config.json
+Contains description of all the fields in the questionare and their exact position on the page.
+Those configs have to be created manually using the template and there is no visual tool to do it. We have a [ jupyter notebook](https://github.com/kubantjan/fast-form/blob/master/notebooks/create_config.ipynb) for this task, but workflow is far from smooth at this point.
+
+#### template.pdf
+Is clear, empty questionare, used as template to correctly scale and rotate scanned files.
+You can use pdf version of the file, that is used to print the questionares.
+
+#### documents
+Simply a folder where you put all the scanned questionares to be processed.
+Once files have been processed, it might be good idea to archive them.
+
+
+
 
 
 ## Development
