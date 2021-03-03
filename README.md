@@ -89,6 +89,21 @@ You can use pdf version of the file, that is used to print the questionares.
 Simply a folder where you put all the scanned questionares to be processed.
 Once files have been processed, it might be good idea to archive them.
 
+#### final_excel_path
+If you want the results to be appended to your excel document.
+
+
+Once you provided all the configuration files, you can process the files using following loop
+ 1. Fill batch of scans in to documents folder.
+ 2. run
+```bash
+fast-form extract
+```
+3. validate results in table processor (such as Microsoft Excel)
+4. Finalize validated results with command:
+```bash
+fast-form finalize
+```
 
 
 
