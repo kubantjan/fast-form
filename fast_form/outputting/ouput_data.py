@@ -54,14 +54,15 @@ def save_data(df: pd.DataFrame, images: List[np.ndarray], excel_path: str):
             sheets_dict = {ws.title: ws for ws in book.worksheets}
         else:
             book = load_workbook(excel_path)
-            writer = pd.ExcelWriter(excel_path, engine='openpyxl')
-            writer.book = book
-            sheets_dict = {ws.title: ws for ws in book.worksheets}
-            writer.sheets = sheets_dict
-            start_index = writer.sheets[SHEET_NAME].max_row
-            df.to_excel(writer, sheet_name=SHEET_NAME, startrow=start_index, index=False, header=False)
-            writer.save()
+            with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+                writer.book = book
+                sheets_dict = {ws.title: ws for ws in book.worksheets}
+                writer.sheets = sheets_dict
+                start_index = writer.sheets[SHEET_NAME].max_row
+                df.to_excel(writer, sheet_name=SHEET_NAME, startrow=start_index, index=False, header=False)
+                writer.save()
         sheet = sheets_dict[SHEET_NAME]
+        img_files = []
         for i, img, response, field_type in zip(df.index + start_index, images, df.data.values, df.field_type.values):
             if field_type != FieldType.SINGLE_CHOICE or response < 0:
                 temp_image_path = os.path.join(temp_image_folder, f"{i}_img.png")
@@ -71,9 +72,16 @@ def save_data(df: pd.DataFrame, images: List[np.ndarray], excel_path: str):
 
                 dim = (width, height)
                 resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-
                 cv2.imwrite(temp_image_path, resized)
-                img = openpyxl.drawing.image.Image(temp_image_path)
+                img_file = open(temp_image_path, 'rb')
+
+                img = openpyxl.drawing.image.Image(img_file)
                 img.anchor = f'F{i + 1}'
                 sheet.add_image(img)
+                img_files.append(img_file)
+
         book.save(excel_path)
+        for img_file in img_files:
+            img_file.close()
+        book.close()
+

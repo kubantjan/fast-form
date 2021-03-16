@@ -78,6 +78,7 @@ def process_to_final_excel(paths_for_processing_config: PathsForProcessingConfig
     writer.save()
     logger.info(f"Successfully processed from validation excel: '{paths_for_processing_config.validation_excel_path}'"
                 f" to final excel '{paths_for_processing_config.final_excel_path}'")
+    writer.close()
 
 
 def load_paths_for_processing_config(path_configuration: str) -> PathsForProcessingConfig:
