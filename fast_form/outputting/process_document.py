@@ -30,7 +30,10 @@ def process_document(processing_config: ProcessingConfig,
                      document_path: str) -> FormStructure:
     images = load_images_from_path(document_path)
 
-    assert len(processing_config.templates) == processing_config.form_structure.page_count
+    assert len(processing_config.templates) == processing_config.form_structure.page_count,\
+        f"len of templates is {len(processing_config.templates)} and page count " \
+        f"is " \
+        f"{processing_config.form_structure.page_count}"
     assert len(images) == processing_config.form_structure.page_count, f"len images is {len(images)} and page count " \
                                                                        f"is " \
                                                                        f"{processing_config.form_structure.page_count}"

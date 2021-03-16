@@ -12,7 +12,7 @@ from fast_form.config.configuration_loading import get_processing_config
 from fast_form.outputting.process_document import process_document_and_add_to_validation_excel
 from fast_form.structure_parser.form_structure_dataclasses import FieldType
 
-SHEET_WITH_RESULTS = "automatic_results"
+SHEET_WITH_RESULTS = "fast-form results"
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ def process_to_validation_excel(paths_for_processing_config: PathsForProcessingC
     logger.info(f"Processing to validation excel from {paths_for_processing_config.folder_with_documents_path}. Number"
                 f" of documents is {len(document_names)}")
     for document_name in document_names:
-        logging.debug(f"Processing document {document_name}")
+        logging.info(f"Processing document {document_name}")
         process_document_and_add_to_validation_excel(
             os.path.join(paths_for_processing_config.folder_with_documents_path, document_name),
             processing_config,
@@ -86,8 +86,9 @@ def load_paths_for_processing_config(path_configuration: str) -> PathsForProcess
         return os.path.join(os.path.dirname(path_configuration), rel_path)
 
     with open(path_configuration, "rb") as f:
-        relative_paths = dacite.from_dict(data_class=PathsForProcessingConfig, data=json.loads(f.read()))
-    return PathsForProcessingConfig(
+        loaded_json = json.loads(f.read())
+        relative_paths = dacite.from_dict(data_class=PathsForProcessingConfig, data=loaded_json)
+    config = PathsForProcessingConfig(
         root=join("."),
         template_path=join(relative_paths.template_path),
         folder_with_documents_path=join(relative_paths.folder_with_documents_path),
@@ -95,3 +96,10 @@ def load_paths_for_processing_config(path_configuration: str) -> PathsForProcess
         form_structure_path=join(relative_paths.form_structure_path),
         validation_excel_path=join(VALIDATION_EXCEL_NAME)
     )
+    if not os.path.exists(config.root):
+        raise ValueError(f"Folder {config.root} has to exist")
+    if not os.path.exists(config.folder_with_documents_path):
+        raise ValueError(f"Folder {config.folder_with_documents_path} has to exist")
+    if not os.path.exists(config.form_structure_path):
+        raise ValueError(f"File {config.form_structure_path} has to exist")
+    return config

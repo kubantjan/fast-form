@@ -20,7 +20,7 @@ def get_template_from_normalized_image(image: ImageCv2) -> Template:
 
 
 def get_templates(template_image_path: str) -> List[Template]:
-    logger.info("Calculating properties of templates, can tak a long time")
+    logger.info("Calculating properties of templates, can take a long time")
     images = load_images_from_path(template_image_path)
 
     templates = [get_template_from_normalized_image(normalize(im)) for im in images]
