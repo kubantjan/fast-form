@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 import dacite
@@ -8,6 +9,8 @@ from fast_form.config.configuration_dataclasses import Models, PathsForProcessin
 from fast_form.field_recognizer.model import load_model
 from fast_form.preprocessing.templating import get_templates
 from fast_form.structure_parser.form_structure_dataclasses import FormStructure, FieldType, Orientation
+
+logger = logging.getLogger(__name__)
 
 LETTERS_MODEL_JSON = "model_letters.json"
 LETTERS_MODEL_H5 = "model_letters.h5"
@@ -50,6 +53,8 @@ def load_form_structure(form_structure_config_path: str) -> FormStructure:
 
 
 def get_processing_config(paths: PathsForProcessingConfig) -> ProcessingConfig:
+    logger.info("Loading the OCR models and everything else needed for the process to run.")
+    logger.debug(f"Template path: {paths.template_path}")
     return ProcessingConfig(
         models=load_models(),
         templates=get_templates(paths.template_path),

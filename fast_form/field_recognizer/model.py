@@ -2,6 +2,7 @@ import json
 import logging
 import os
 
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 from keras.models import model_from_json
 
 logger = logging.getLogger(__name__)
